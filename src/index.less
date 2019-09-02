@@ -1,0 +1,77 @@
+.wrapper {
+  position: relative;
+  .videoCon {
+    .video {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .danmu {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+  .control {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+
+    .bar {
+      position: absolute;
+      height: 45px;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+      z-index: 9;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      box-sizing: border-box;
+
+      &:before {
+        content: '';
+        position: absolute;
+        height: 0px;
+        width: 100%;
+        box-shadow: 0 -2px 50px 25px rgba(0, 0, 0, 0.5);
+        left: 0;
+        bottom: 0;
+        z-index: -1;
+      }
+
+      .left {
+        height: 100%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+      }
+
+      .right {
+        height: 100%;
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+      }
+
+      .icon {
+        width: 35px;
+        height: 35px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+
+        .iconfont {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}

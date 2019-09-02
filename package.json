@@ -41,6 +41,7 @@
     "less-loader": "^5.0.0",
     "postcss-loader": "^3.0.0",
     "style-loader": "^1.0.0",
+    "url-loader": "^2.1.0",
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7",
     "webpack-dev-server": "^3.8.0"

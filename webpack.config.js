@@ -36,6 +36,17 @@ module.exports = {
           'less-loader',
         ],
       },
+      {
+        test: /\.(png|jpg|svg)$/i,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 1024,
+            },
+          },
+        ],
+      },
     ],
   },
   plugins: [htmlWebpackPlugin],
