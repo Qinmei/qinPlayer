@@ -1,36 +1,27 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useContext } from 'react';
 import styles from './index.less';
+import { PlayerContext } from './model';
 
 interface PropsType {
   source: string;
   poster: string;
-  play?: Boolean;
-  current?: Number;
-  volume?: Number;
-  fullscreen?: Boolean;
-  movie?: Boolean;
 }
 
 const reactComponent: React.FC<PropsType> = props => {
-  const {
-    source,
-    poster = null,
-    play = false,
-    current = 0,
-    volume = 0.75,
-    fullscreen = false,
-    movie = false,
-  } = props;
+  const { source, poster = null } = props;
+
+  const data: any = useContext(PlayerContext);
+  const { state, dispatch } = data;
 
   const videoRef: any = useRef(null);
 
   useEffect(() => {
-    if (play) {
+    if (state.play) {
       videoRef.current.play();
     } else {
       videoRef.current.pause();
     }
-  }, [play]);
+  }, [state.play]);
 
   return (
     <video

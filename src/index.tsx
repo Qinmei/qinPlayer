@@ -1,6 +1,7 @@
 import React from 'react';
 import Core from './core';
 import Theme from './theme';
+import { PlayerProvider } from './model';
 
 interface PropsType {
   source: string;
@@ -9,6 +10,12 @@ interface PropsType {
 
 const reactComponent: React.FC<PropsType> = props => {
   const { source, poster } = props;
-  return <Theme source={source} poster={poster}></Theme>;
+  return (
+    <PlayerProvider>
+      <Theme>
+        <Core source={source} poster={poster}></Core>
+      </Theme>
+    </PlayerProvider>
+  );
 };
 export default reactComponent;

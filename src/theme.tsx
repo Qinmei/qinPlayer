@@ -1,25 +1,42 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useContext, Children } from 'react';
 import styles from './index.less';
 import Icon from './icon';
-import Core from './core';
+import { PlayerContext } from './model';
 
 interface PropsType {
-  source: string;
-  poster: string;
+  children?: any;
+}
+
+interface DataProps {
+  state: any;
+  dispatch: (value: any) => void;
 }
 
 const reactComponent: React.FC<PropsType> = props => {
-  const { source, poster } = props;
-  const [play, setPlay] = useState(false);
+  const { children } = props;
+
+  const data: DataProps = useContext(PlayerContext);
+  const { state, dispatch } = data;
+
+  useEffect(() => {
+    data.dispatch({ play: true });
+  }, []);
 
   const changePlay = () => {
-    setPlay(!play);
+    console.time('sss');
+    dispatch({
+      play: !state.play,
+    });
   };
+
+  useEffect(() => {
+    console.timeEnd('sss');
+  }, [state.play]);
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.videoCon}>
-        <Core source={source} poster={poster} play={play}></Core>
+        {children}
         <div className={styles.test}></div>
       </div>
       <div className={styles.danmu}></div>
