@@ -1,10 +1,6 @@
 .wrapper {
   position: relative;
   .videoCon {
-    .video {
-      width: 100%;
-      height: 100%;
-    }
   }
   .danmu {
     position: absolute;
@@ -23,55 +19,84 @@
 
     .bar {
       position: absolute;
-      height: 45px;
       width: 100%;
       left: 0;
       bottom: 0;
       z-index: 9;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 10px;
-      box-sizing: border-box;
 
       &:before {
         content: '';
         position: absolute;
         height: 0px;
         width: 100%;
-        box-shadow: 0 -2px 50px 25px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 -2px 50px 25px rgba(0, 0, 0, 0.7);
         left: 0;
         bottom: 0;
         z-index: -1;
       }
 
-      .left {
+      .content {
+        position: relative;
         height: 100%;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-      }
+        padding: 0 10px;
+        box-sizing: border-box;
 
-      .right {
-        height: 100%;
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-      }
+        .option {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          line-height: 100%;
+          height: 40px;
 
-      .icon {
-        width: 35px;
-        height: 35px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
+          .left {
+            height: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+          }
 
-        .iconfont {
-          width: 20px;
-          height: 20px;
+          .right {
+            height: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+          }
+
+          .icon {
+            width: 35px;
+            height: 35px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+
+            .iconfont {
+              width: 20px;
+              height: 20px;
+            }
+          }
+        }
+
+        .progress {
+          padding: 5px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin-bottom: -5px;
+          z-index: 19;
+
+          .line {
+            height: 3px;
+            width: 100%;
+            background-color: rgba(255, 255, 255, 0.5);
+          }
         }
       }
     }
   }
+}
+
+.video {
+  width: 100%;
+  height: 100%;
 }
