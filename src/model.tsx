@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from 'react';
+import styles from './style.less';
 
 interface DataType {
   play?: Boolean;
@@ -18,7 +19,6 @@ const data: DataType = {
 const PlayerContext = createContext(data);
 
 const reducer = (state: DataType, action: any) => {
-  console.log(action);
   return {
     ...state,
     ...action,
@@ -28,7 +28,9 @@ const reducer = (state: DataType, action: any) => {
 const PlayerProvider = (props: any) => {
   const [state, dispatch] = useReducer(reducer, data);
   return (
-    <PlayerContext.Provider value={{ state, dispatch }}>{props.children}</PlayerContext.Provider>
+    <PlayerContext.Provider value={{ state, dispatch }}>
+      <div className={styles.wrapper}>{props.children}</div>
+    </PlayerContext.Provider>
   );
 };
 

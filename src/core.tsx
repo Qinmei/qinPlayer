@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useContext } from 'react';
-import styles from './index.less';
+import styles from './style.less';
 import { PlayerContext } from './model';
+import { url } from 'inspector';
 
 interface PropsType {
   source: string;
@@ -27,9 +28,10 @@ const reactComponent: React.FC<PropsType> = props => {
     <video
       className={styles.video}
       src={source}
-      poster={poster}
+      poster={'qinvideo'}
       onLoadStart={e => console.log(e)}
       ref={videoRef}
+      style={{ backgroundImage: `url(${poster})` }}
     ></video>
   );
 };

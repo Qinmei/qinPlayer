@@ -12,9 +12,8 @@ const reactComponent: React.FC<PropsType> = props => {
   const { source, poster } = props;
   return (
     <PlayerProvider>
-      <Theme>
-        <Core source={source} poster={poster}></Core>
-      </Theme>
+      <Core source={source} poster={poster}></Core>
+      <Theme></Theme>
     </PlayerProvider>
   );
 };
