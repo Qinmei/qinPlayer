@@ -18,16 +18,20 @@ const reactComponent: React.FC<PropsType> = props => {
   const data: DataProps = useContext(PlayerContext);
   const { state, dispatch } = data;
 
-  const changePlay = () => {
-    console.time('sss');
-    dispatch({
-      play: !state.play,
-    });
+  const methods = {
+    changePlay: () => {
+      dispatch({
+        play: !state.play,
+      });
+    },
+    changeScreen: () => {
+      dispatch({
+        fullscreen: !state.fullscreen,
+      });
+    },
   };
 
-  useEffect(() => {
-    console.timeEnd('sss');
-  }, [state.play]);
+  useEffect(() => {}, [state.play]);
 
   return (
     <div className={styles.control}>
@@ -38,7 +42,7 @@ const reactComponent: React.FC<PropsType> = props => {
           </div>
           <div className={styles.option}>
             <div className={styles.left}>
-              <div className={styles.icon} onClick={changePlay}>
+              <div className={styles.icon} onClick={methods.changePlay}>
                 <Icon type="play" className={styles.iconfont}></Icon>
               </div>
             </div>
@@ -52,7 +56,7 @@ const reactComponent: React.FC<PropsType> = props => {
               <div className={styles.icon}>
                 <Icon type="intotheater" className={styles.iconfont}></Icon>
               </div>
-              <div className={styles.icon}>
+              <div className={styles.icon} onClick={methods.changeScreen}>
                 <Icon type="fullscreen" className={styles.iconfont}></Icon>
               </div>
             </div>
