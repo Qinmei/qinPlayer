@@ -1,4 +1,4 @@
-import React, { createContext, useReducer } from 'react';
+import React, { createContext, useReducer, useEffect, useRef } from 'react';
 import styles from './style.less';
 
 interface DataType {
@@ -26,10 +26,36 @@ const reducer = (state: DataType, action: any) => {
 };
 
 const PlayerProvider = (props: any) => {
+  const playerRef: any = useRef(null);
   const [state, dispatch] = useReducer(reducer, data);
+  const { fullscreen } = state;
+
+  const methods = {
+    changePlay: () => {
+      dispatch({
+        play: !state.play,
+      });
+    },
+    changeScreen: () => {
+      dispatch({
+        fullscreen: !state.fullscreen,
+      });
+    },
+  };
+
+  useEffect(() => {
+    if (fullscreen) {
+      playerRef.current.webkitRequestFullScreen();
+    } else {
+      document.webkitCancelFullScreen();
+    }
+  }, [fullscreen]);
+
   return (
-    <PlayerContext.Provider value={{ state, dispatch }}>
-      <div className={styles.wrapper}>{props.children}</div>
+    <PlayerContext.Provider value={{ state, dispatch, methods }}>
+      <div className={styles.wrapper} ref={playerRef}>
+        {props.children}
+      </div>
     </PlayerContext.Provider>
   );
 };
