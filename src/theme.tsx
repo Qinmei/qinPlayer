@@ -1,4 +1,10 @@
-import React, { useEffect, useRef, useState, useContext, Children } from 'react';
+import React, {
+  useEffect,
+  useRef,
+  useState,
+  useContext,
+  Children,
+} from 'react';
 import styles from './style.less';
 import Icon from './icon';
 import { PlayerContext } from './model';
@@ -31,6 +37,7 @@ const reactComponent: React.FC<PropsType> = props => {
 
   return (
     <div className={styles.control}>
+      {state.message && <div className={styles.message}>{state.message}</div>}
       <div className={styles.bar}>
         <div className={styles.content}>
           <div className={styles.progress}>
@@ -47,7 +54,14 @@ const reactComponent: React.FC<PropsType> = props => {
               </div>
             </div>
             <div className={styles.right}>
-              <div className={styles.icon}>{volumeNode(state.volume)}</div>
+              <div
+                className={styles.icon}
+                onClick={() => {
+                  methods.changeVolume(state.volume ? 0 : 0.75);
+                }}
+              >
+                {volumeNode(state.volume)}
+              </div>
               <div className={styles.icon}>
                 <Icon type="setting" className={styles.iconfont}></Icon>
               </div>

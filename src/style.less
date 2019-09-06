@@ -2,6 +2,9 @@
   position: relative;
   width: 100%;
   height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   // &:fullscreen {
   //   .control .bar .content .option {
@@ -28,6 +31,18 @@
     top: 0;
     left: 0;
     overflow: hidden;
+
+    .message {
+      position: absolute;
+      bottom: 60px;
+      left: 15px;
+      padding: 8px 12px;
+      background-color: rgba(0, 0, 0, 0.75);
+      color: white;
+      border-radius: 4px;
+      font-size: 14px;
+      line-height: 14px;
+    }
 
     .bar {
       position: absolute;

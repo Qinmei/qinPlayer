@@ -7,6 +7,7 @@ interface DataType {
   volume?: Number;
   fullscreen?: Boolean;
   movie?: Boolean;
+  message?: string;
 }
 
 const data: DataType = {
@@ -15,6 +16,7 @@ const data: DataType = {
   volume: 0.75,
   fullscreen: false,
   movie: false,
+  message: '加载错误',
 };
 const PlayerContext = createContext(data);
 
@@ -39,6 +41,11 @@ const PlayerProvider = (props: any) => {
     changeScreen: () => {
       dispatch({
         fullscreen: !state.fullscreen,
+      });
+    },
+    changeVolume: (value: number) => {
+      dispatch({
+        volume: value,
       });
     },
   };

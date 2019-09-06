@@ -31,14 +31,9 @@ const reactComponent: React.FC<PropsType> = props => {
     videoRef.current.currentTime = current;
   }, [current]);
 
-  // useEffect(() => {
-  //   console.log(fullscreen);
-  //   if (fullscreen) {
-  //     videoRef.current.webkitRequestFullScreen();
-  //   } else {
-  //     document.webkitCancelFullScreen();
-  //   }
-  // }, [fullscreen]);
+  useEffect(() => {
+    videoRef.current.volume = volume;
+  }, [volume]);
 
   return (
     <video
@@ -48,7 +43,6 @@ const reactComponent: React.FC<PropsType> = props => {
       preload={preload}
       autoPlay={autoplay}
       loop={loop}
-      webkit-playsinline
       controls={false}
       onLoadStart={e => console.log(e)}
       ref={videoRef}
