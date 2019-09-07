@@ -18,8 +18,28 @@ const reactComponent: React.FC<PropsType> = props => {
 
   const data: any = useContext(PlayerContext);
   const {
-    state: { play, current, volume, fullscreen, movie },
+    state: { play, current, volume, fullscreen, movie, seeked },
+    methods,
   } = data;
+
+  const onMethods = {
+    onDurationChange: (e: any) => {
+      const { duration } = e.target;
+      methods.changeDuration(duration);
+    },
+    onTimeUpdate: (e: any) => {
+      const { currentTime } = e.target;
+      methods.changeCurrent(currentTime);
+    },
+
+    onSuspend: (e: any) => {
+      const { buffered } = e.target;
+      const length = buffered.length;
+      const arr = [...Array(length).keys()];
+      const buffer = arr.map((item: any) => [buffered.start(item), buffered.end(item)]);
+      methods.changeBuffered(buffer);
+    },
+  };
 
   // 播放
   useEffect(() => {
@@ -32,8 +52,8 @@ const reactComponent: React.FC<PropsType> = props => {
 
   // 进度条
   useEffect(() => {
-    videoRef.current.currentTime = current;
-  }, [current]);
+    videoRef.current.currentTime = seeked;
+  }, [seeked]);
 
   // 音量
   useEffect(() => {
@@ -59,7 +79,13 @@ const reactComponent: React.FC<PropsType> = props => {
         autoPlay={autoplay}
         loop={loop}
         controls={false}
-        onLoadStart={e => console.log(e)}
+        // onLoadStart={e => console.log(e)}
+        // onError={e => console.log(e)}
+        onDurationChange={onMethods.onDurationChange}
+        // onProgress={e => console.log(e)}
+        onTimeUpdate={onMethods.onTimeUpdate}
+        onSuspend={onMethods.onSuspend}
+        // onSeeked={e => console.log(e)}
         ref={videoRef}
       ></video>
       {children}

@@ -21,17 +21,11 @@ const reactComponent: React.FC<PropsType> = props => {
     autoplay = false,
     loop = false,
     theme = '#00a1d6',
-    onStateChange = (type: string, value: any) => {},
+    onStateChange = (type: string, value: any, state: any) => {},
   } = props;
   return (
     <PlayerProvider onStateChange={onStateChange}>
-      <Core
-        source={source}
-        poster={poster}
-        preload={preload}
-        autoplay={autoplay}
-        loop={loop}
-      >
+      <Core source={source} poster={poster} preload={preload} autoplay={autoplay} loop={loop}>
         <Theme color={theme}></Theme>
       </Core>
     </PlayerProvider>

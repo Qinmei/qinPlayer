@@ -74,6 +74,7 @@
           align-items: center;
           line-height: 100%;
           height: 40px;
+          z-index: 18;
 
           .left {
             height: 100%;
@@ -105,17 +106,50 @@
         }
 
         .progress {
-          padding: 5px;
+          position: absolute;
+          top: -8px;
+          left: 15px;
+          width: calc(100% - 30px);
+          padding: 5px 0;
           display: flex;
           justify-content: center;
           align-items: center;
           margin-bottom: -5px;
           z-index: 19;
+          cursor: pointer;
 
           .line {
+            position: relative;
             height: 3px;
             width: 100%;
-            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 5px;
+            background-color: rgba(255, 255, 255, 0.3);
+
+            .buffered {
+              z-index: -1;
+              left: 0;
+              top: 0;
+              position: absolute;
+              height: 100%;
+              background-color: rgba(255, 255, 255, 0.6);
+            }
+
+            .current {
+              height: 100%;
+              position: relative;
+
+              &:after {
+                content: '';
+                position: absolute;
+                right: 0;
+                top: 1px;
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background-color: inherit;
+                transform: translate(50%, -43.75%);
+              }
+            }
           }
         }
       }
