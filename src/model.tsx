@@ -1,5 +1,9 @@
-import React, { createContext, useReducer, useEffect, useRef } from 'react';
-import styles from './style.less';
+import React, { createContext, useReducer } from 'react';
+
+interface PropsType {
+  onStateChange: (type: string, value: any) => void;
+  children?: React.ReactNode;
+}
 
 interface DataType {
   play?: Boolean;
@@ -16,7 +20,7 @@ const data: DataType = {
   volume: 0.75,
   fullscreen: false,
   movie: false,
-  message: '加载错误',
+  message: '',
 };
 const PlayerContext = createContext(data);
 
@@ -27,42 +31,47 @@ const reducer = (state: DataType, action: any) => {
   };
 };
 
-const PlayerProvider = (props: any) => {
-  const playerRef: any = useRef(null);
+const PlayerProvider = (props: PropsType) => {
+  const { onStateChange, children } = props;
   const [state, dispatch] = useReducer(reducer, data);
-  const { fullscreen } = state;
 
+  // 导出方法给控制栏调用, 改变model的数据状态, 同时回调函数将结果上传
   const methods = {
     changePlay: () => {
       dispatch({
         play: !state.play,
       });
+      onStateChange('play', !state.play);
     },
     changeScreen: () => {
       dispatch({
         fullscreen: !state.fullscreen,
       });
+      onStateChange('fullscreen', !state.fullscreen);
+    },
+    changeMovie: () => {
+      dispatch({
+        movie: !state.movie,
+      });
+      onStateChange('movie', !state.movie);
     },
     changeVolume: (value: number) => {
       dispatch({
         volume: value,
       });
+      onStateChange('volume', value);
+    },
+    changeMessage: (msg: string) => {
+      dispatch({
+        message: msg,
+      });
+      onStateChange('message', msg);
     },
   };
 
-  useEffect(() => {
-    if (fullscreen) {
-      playerRef.current.webkitRequestFullScreen();
-    } else {
-      document.webkitCancelFullScreen();
-    }
-  }, [fullscreen]);
-
   return (
     <PlayerContext.Provider value={{ state, dispatch, methods }}>
-      <div className={styles.wrapper} ref={playerRef}>
-        {props.children}
-      </div>
+      {children}
     </PlayerContext.Provider>
   );
 };

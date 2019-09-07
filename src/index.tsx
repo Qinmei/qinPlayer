@@ -7,30 +7,33 @@ interface PropsType {
   source: string;
   poster: string;
   preload?: string;
-  autoplay?: Boolean;
-  loop?: Boolean;
+  autoplay?: boolean;
+  loop?: boolean;
   theme?: string;
+  onStateChange?: (type: string, value: any) => void;
 }
 
 const reactComponent: React.FC<PropsType> = props => {
   const {
     source,
-    poster = null,
+    poster = '',
     preload = 'metadata',
     autoplay = false,
     loop = false,
     theme = '#00a1d6',
+    onStateChange = (type: string, value: any) => {},
   } = props;
   return (
-    <PlayerProvider>
+    <PlayerProvider onStateChange={onStateChange}>
       <Core
         source={source}
         poster={poster}
         preload={preload}
         autoplay={autoplay}
         loop={loop}
-      ></Core>
-      <Theme color={theme}></Theme>
+      >
+        <Theme color={theme}></Theme>
+      </Core>
     </PlayerProvider>
   );
 };

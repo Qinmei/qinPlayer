@@ -11,6 +11,7 @@ import { PlayerContext } from './model';
 
 interface PropsType {
   children?: any;
+  color?: string;
 }
 
 interface DataProps {
@@ -65,7 +66,7 @@ const reactComponent: React.FC<PropsType> = props => {
               <div className={styles.icon}>
                 <Icon type="setting" className={styles.iconfont}></Icon>
               </div>
-              <div className={styles.icon}>
+              <div className={styles.icon} onClick={methods.changeMovie}>
                 {state.movie ? (
                   <Icon type="exittheater" className={styles.iconfont}></Icon>
                 ) : (
