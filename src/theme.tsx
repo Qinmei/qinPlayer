@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState, useContext, Children } from 'react'
 import styles from './style.less';
 import Icon from './icon';
 import { PlayerContext } from './model';
+import { timeTransfer } from './utils';
 
 interface PropsType {
   color?: string;
@@ -32,26 +33,19 @@ const reactComponent: React.FC<PropsType> = props => {
 
   const progressRef: React.RefObject = useRef(null);
 
-  const [current, setCurrent] = useState(0);
+  const [current, setCurrent] = useState(state.current);
   const [show, setShow] = useState(false);
-
-  const progressChange = (e: React.MouseEvent) => {
-    console.log('click');
-    e.preventDefault();
-    const seeked = getSeeked(e);
-    !show && methods.changeSeeked(seeked);
-  };
 
   const onMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
-    console.log('mouseDown');
+    e.stopPropagation();
     setShow(true);
   };
 
   const onMouseUp = (e: React.MouseEvent) => {
-    console.log('121212');
+    console.log('clickup');
     e.preventDefault();
-    console.log('mouseUp', show);
+    e.stopPropagation();
     if (!show) return;
     const seeked = getSeeked(e);
     setCurrent(seeked);
@@ -60,6 +54,7 @@ const reactComponent: React.FC<PropsType> = props => {
   };
 
   const onMouseMove = (e: React.MouseEvent) => {
+    if (e.buttons !== 1) return;
     e.preventDefault();
     const seeked = getSeeked(e);
     show && setCurrent(seeked);
@@ -68,33 +63,40 @@ const reactComponent: React.FC<PropsType> = props => {
   const getSeeked = (e: React.MouseEvent) => {
     const offset = e.nativeEvent.offsetX;
     const total = progressRef.current.clientWidth;
-    const percent = offset / total;
+    let percent = offset / total;
+    percent > 1 && (percent = 1);
+    percent < 0 && (percent = 0);
     const seeked = state.duration * percent;
     return seeked;
   };
 
+  useEffect(() => {
+    !show && setCurrent(state.current);
+  }, [state.current]);
+
   return (
     <div
-      className={styles.control}
+      className={`${styles.control} ${state.play ? styles.play : styles.pause}`}
       onMouseUp={onMouseUp}
-      onMouseLeave={onMouseUp}
       onMouseMove={onMouseMove}
+      onMouseLeave={onMouseUp}
     >
       {state.message && <div className={styles.message}>{state.message}</div>}
+      {state.loading && <Icon type="loading" className={styles.loading}></Icon>}
       <div className={styles.bar}>
         <div className={styles.content}>
           <div
             className={styles.progress}
-            onClick={progressChange}
             ref={progressRef}
             onMouseDown={onMouseDown}
+            onMouseUp={onMouseUp}
           >
             <div className={styles.line}>
               <div
                 className={styles.current}
                 style={{
                   backgroundColor: color,
-                  width: ((show ? current : state.current) / state.duration) * 100 + '%',
+                  width: (current / state.duration) * 100 + '%',
                 }}
               ></div>
               {state.buffered.map((item: Array<number>, index: number) => (
@@ -117,6 +119,11 @@ const reactComponent: React.FC<PropsType> = props => {
                 ) : (
                   <Icon type="play" className={styles.iconfont}></Icon>
                 )}
+              </div>
+              <div className={styles.duration}>
+                <span>{timeTransfer(state.current)}</span>
+                <span> / </span>
+                <span>{timeTransfer(state.duration)}</span>
               </div>
             </div>
             <div className={styles.right}>

@@ -60,7 +60,7 @@ const PlayerProvider = (props: PropsType) => {
     changeSeeked: (value: number = state.seeked) => sendData('seeked', value),
     changeBuffered: (value: number = 0) => sendData('buffered', value),
     changeDuration: (value: number = 0) => sendData('duration', value),
-    changeloading: (value: boolean = !state.loading) => sendData('loading', value),
+    changeLoading: (value: boolean = !state.loading) => sendData('loading', value),
     changeMessage: (value: string = '') => sendData('message', value),
   };
 

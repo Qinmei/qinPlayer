@@ -31,13 +31,18 @@ const reactComponent: React.FC<PropsType> = props => {
       const { currentTime } = e.target;
       methods.changeCurrent(currentTime);
     },
-
-    onSuspend: (e: any) => {
+    onProgress: (e: any) => {
       const { buffered } = e.target;
       const length = buffered.length;
       const arr = [...Array(length).keys()];
       const buffer = arr.map((item: any) => [buffered.start(item), buffered.end(item)]);
       methods.changeBuffered(buffer);
+    },
+    onWaiting: () => {
+      methods.changeLoading(true);
+    },
+    onCanPlay: () => {
+      methods.changeLoading(false);
     },
   };
 
@@ -82,9 +87,11 @@ const reactComponent: React.FC<PropsType> = props => {
         // onLoadStart={e => console.log(e)}
         // onError={e => console.log(e)}
         onDurationChange={onMethods.onDurationChange}
-        // onProgress={e => console.log(e)}
+        onProgress={onMethods.onProgress}
         onTimeUpdate={onMethods.onTimeUpdate}
-        onSuspend={onMethods.onSuspend}
+        // onSuspend={onMethods.onSuspend}
+        onWaiting={onMethods.onWaiting}
+        onCanPlay={onMethods.onCanPlay}
         // onSeeked={e => console.log(e)}
         ref={videoRef}
       ></video>
