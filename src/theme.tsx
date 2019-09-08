@@ -35,6 +35,7 @@ const reactComponent: React.FC<PropsType> = props => {
 
   const [current, setCurrent] = useState(state.current);
   const [show, setShow] = useState(false);
+  const [currentTime, setCurrentTime] = useState(100);
 
   const onMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -58,6 +59,11 @@ const reactComponent: React.FC<PropsType> = props => {
     e.preventDefault();
     const seeked = getSeeked(e);
     show && setCurrent(seeked);
+  };
+
+  const onMouseMoveCurrentTime = (e: React.MouseEvent) => {
+    const seeked = getSeeked(e);
+    setCurrentTime(seeked);
   };
 
   const getSeeked = (e: React.MouseEvent) => {
@@ -90,6 +96,7 @@ const reactComponent: React.FC<PropsType> = props => {
             ref={progressRef}
             onMouseDown={onMouseDown}
             onMouseUp={onMouseUp}
+            onMouseMove={onMouseMoveCurrentTime}
           >
             <div className={styles.line}>
               <div
@@ -109,6 +116,13 @@ const reactComponent: React.FC<PropsType> = props => {
                   }}
                 ></div>
               ))}
+
+              <div
+                className={styles.currentTime}
+                style={{ left: (currentTime / state.duration) * 100 + '%' }}
+              >
+                {timeTransfer(currentTime)}
+              </div>
             </div>
           </div>
           <div className={styles.option}>
