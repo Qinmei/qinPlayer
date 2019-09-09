@@ -16,6 +16,10 @@ interface DataType {
   fullscreen?: Boolean;
   movie?: Boolean;
   message?: string;
+  thumbnail: {
+    count: number;
+    urls: Array<string>;
+  };
 }
 
 const data: DataType = {
@@ -29,6 +33,14 @@ const data: DataType = {
   fullscreen: false,
   movie: false,
   message: '',
+  thumbnail: {
+    count: 300,
+    urls: [
+      'https://i0.hdslb.com/bfs/videoshot/7539894-1.jpg',
+      'https://i0.hdslb.com/bfs/videoshot/7539894-2.jpg',
+      'https://i0.hdslb.com/bfs/videoshot/7539894-3.jpg',
+    ],
+  },
 };
 const PlayerContext = createContext(data);
 

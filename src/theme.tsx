@@ -35,7 +35,7 @@ const reactComponent: React.FC<PropsType> = props => {
 
   const [current, setCurrent] = useState(state.current);
   const [show, setShow] = useState(false);
-  const [currentTime, setCurrentTime] = useState(100);
+  const [currentTime, setCurrentTime] = useState(0);
 
   const onMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -44,7 +44,6 @@ const reactComponent: React.FC<PropsType> = props => {
   };
 
   const onMouseUp = (e: React.MouseEvent) => {
-    console.log('clickup');
     e.preventDefault();
     e.stopPropagation();
     if (!show) return;
@@ -56,7 +55,6 @@ const reactComponent: React.FC<PropsType> = props => {
 
   const onMouseMove = (e: React.MouseEvent) => {
     if (e.buttons !== 1) return;
-    e.preventDefault();
     const seeked = getSeeked(e);
     show && setCurrent(seeked);
   };
@@ -67,13 +65,37 @@ const reactComponent: React.FC<PropsType> = props => {
   };
 
   const getSeeked = (e: React.MouseEvent) => {
-    const offset = e.nativeEvent.offsetX;
+    const positionX = window.pageXOffset + progressRef.current.getBoundingClientRect().left;
+    const offset = e.pageX - positionX;
     const total = progressRef.current.clientWidth;
     let percent = offset / total;
     percent > 1 && (percent = 1);
     percent < 0 && (percent = 0);
     const seeked = state.duration * percent;
     return seeked;
+  };
+
+  const getThumbnailLeft = (currentTime: number) => {
+    const percent = currentTime / state.duration;
+    const total = progressRef.current ? progressRef.current.clientWidth : 0;
+    let result = percent * total;
+    result < 80 && (result = 80);
+    total - result < 80 && (result = total - 80);
+    return (result / total) * 100;
+  };
+
+  const getThumbnailImg = (currentTime: number) => {
+    const percent = currentTime / state.duration;
+    const { count, urls } = state.thumbnail;
+    const num = Math.round(count * percent);
+    const page = Math.floor(num / 100);
+    const row = Math.floor((num - 100 * page) / 10);
+    const col = num - 100 * page - 10 * row;
+    return {
+      url: urls[page],
+      left: row * 160 + 'px',
+      top: col * 90 + 'px',
+    };
   };
 
   useEffect(() => {
@@ -123,6 +145,17 @@ const reactComponent: React.FC<PropsType> = props => {
               >
                 {timeTransfer(currentTime)}
               </div>
+
+              <div
+                className={styles.thumbnail}
+                style={{
+                  left: getThumbnailLeft(currentTime) + '%',
+                  backgroundImage: `url(${getThumbnailImg(currentTime).url})`,
+                  backgroundPosition: `${getThumbnailImg(currentTime).left} ${
+                    getThumbnailImg(currentTime).top
+                  }`,
+                }}
+              ></div>
             </div>
           </div>
           <div className={styles.option}>

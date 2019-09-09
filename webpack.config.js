@@ -27,12 +27,12 @@ module.exports = {
               },
             },
           },
-          {
-            loader: 'postcss-loader',
-            options: {
-              plugins: [require('autoprefix')],
-            },
-          },
+          // {
+          //   loader: 'postcss-loader',
+          //   options: {
+          //     plugins: [require('autoprefix')],
+          //   },
+          // },
           'less-loader',
         ],
       },
