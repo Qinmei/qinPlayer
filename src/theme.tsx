@@ -181,6 +181,7 @@ const reactComponent: React.FC<PropsType> = props => {
                 onClick={() => methods.changeVolume(state.volume ? 0 : 0.75)}
               >
                 {volumeNode(state.volume)}
+                <div className={styles.volumePanel}></div>
               </div>
               <div className={styles.icon}>
                 <Icon type="setting" className={styles.iconfont}></Icon>
