@@ -110,6 +110,7 @@
             align-items: center;
 
             .duration {
+              user-select: none;
               margin-left: 8px;
               color: white;
               opacity: 0.8;
@@ -131,10 +132,31 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            position: relative;
 
             .iconfont {
               width: 25px;
               height: 20px;
+            }
+
+            .tips {
+              position: absolute;
+              background-color: rgba(0, 0, 0, 0.6);
+              padding: 5px 8px;
+              border-radius: 3px;
+              top: -8px;
+              left: 17.5px;
+              transform: translate(-50%, -100%);
+              display: none;
+              font-size: 12px;
+              color: white;
+              white-space: pre;
+            }
+
+            &:hover {
+              .tips {
+                display: inline-block;
+              }
             }
           }
         }

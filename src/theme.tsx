@@ -3,6 +3,7 @@ import styles from './style.less';
 import Icon from './icon';
 import { PlayerContext } from './model';
 import { timeTransfer } from './utils';
+import lang from './local';
 
 interface PropsType {
   color?: string;
@@ -33,9 +34,9 @@ const reactComponent: React.FC<PropsType> = props => {
 
   const progressRef: React.RefObject = useRef(null);
 
-  const [current, setCurrent] = useState(state.current);
-  const [show, setShow] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
+  const [current, setCurrent] = useState(state.current); // 进度条
+  const [show, setShow] = useState(false); // 点击拖动进度条判断
+  const [currentTime, setCurrentTime] = useState(0); // 进度条滑动时间显示
 
   const onMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -111,6 +112,7 @@ const reactComponent: React.FC<PropsType> = props => {
     >
       {state.message && <div className={styles.message}>{state.message}</div>}
       {state.loading && <Icon type="loading" className={styles.loading}></Icon>}
+
       <div className={styles.bar}>
         <div className={styles.content}>
           <div
@@ -183,12 +185,19 @@ const reactComponent: React.FC<PropsType> = props => {
               <div className={styles.icon}>
                 <Icon type="setting" className={styles.iconfont}></Icon>
               </div>
+              <div className={styles.icon} onClick={() => methods.changePicture()}>
+                <Icon type="picture" className={styles.iconfont}></Icon>
+                <div className={styles.tips}>{lang[state.lang].picture}</div>
+              </div>
               <div className={styles.icon} onClick={() => methods.changeMovie()}>
                 {state.movie ? (
                   <Icon type="exittheater" className={styles.iconfont}></Icon>
                 ) : (
                   <Icon type="intotheater" className={styles.iconfont}></Icon>
                 )}
+                <div className={styles.tips}>
+                  {lang[state.lang][state.movie ? 'exittheater' : 'intotheater']}
+                </div>
               </div>
               <div className={styles.icon} onClick={() => methods.changeScreen()}>
                 {state.fullscreen ? (
@@ -196,6 +205,9 @@ const reactComponent: React.FC<PropsType> = props => {
                 ) : (
                   <Icon type="fullscreen" className={styles.iconfont}></Icon>
                 )}
+                <div className={styles.tips}>
+                  {lang[state.lang][state.fullscreen ? 'exitscreen' : 'fullscreen']}
+                </div>
               </div>
             </div>
           </div>

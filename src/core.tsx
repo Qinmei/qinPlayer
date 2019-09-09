@@ -18,7 +18,7 @@ const reactComponent: React.FC<PropsType> = props => {
 
   const data: any = useContext(PlayerContext);
   const {
-    state: { play, current, volume, fullscreen, movie, seeked },
+    state: { play, current, volume, fullscreen, movie, seeked, picture },
     methods,
   } = data;
 
@@ -73,6 +73,16 @@ const reactComponent: React.FC<PropsType> = props => {
       document.webkitCancelFullScreen();
     }
   }, [fullscreen]);
+
+  // 画中画
+
+  useEffect(() => {
+    if (picture) {
+      videoRef.current.requestPictureInPicture();
+    } else {
+      document.exitPictureInPicture();
+    }
+  }, [picture]);
 
   return (
     <div className={styles.wrapper} ref={playerRef}>

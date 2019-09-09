@@ -6,16 +6,18 @@ interface PropsType {
 }
 
 interface DataType {
-  play?: Boolean;
+  play?: boolean;
   loading?: boolean;
   duration?: number;
   buffered?: Array<Array<number>>;
   current?: number;
   seeked?: number;
   volume?: number;
-  fullscreen?: Boolean;
-  movie?: Boolean;
+  fullscreen?: boolean;
+  picture?: boolean;
+  movie?: boolean;
   message?: string;
+  lang?: string;
   thumbnail: {
     count: number;
     urls: Array<string>;
@@ -33,6 +35,7 @@ const data: DataType = {
   fullscreen: false,
   movie: false,
   message: '',
+  lang: 'CN',
   thumbnail: {
     count: 300,
     urls: [
@@ -74,6 +77,7 @@ const PlayerProvider = (props: PropsType) => {
     changeDuration: (value: number = 0) => sendData('duration', value),
     changeLoading: (value: boolean = !state.loading) => sendData('loading', value),
     changeMessage: (value: string = '') => sendData('message', value),
+    changePicture: (value: boolean = !state.picture) => sendData('picture', value),
   };
 
   return (
