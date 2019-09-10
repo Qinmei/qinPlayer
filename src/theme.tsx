@@ -33,10 +33,14 @@ const reactComponent: React.FC<PropsType> = props => {
   const { methods, state } = data;
 
   const progressRef: React.RefObject = useRef(null);
+  const volumeRef: React.RefObject = useRef(null);
 
   const [current, setCurrent] = useState(state.current); // 进度条
   const [show, setShow] = useState(false); // 点击拖动进度条判断
   const [currentTime, setCurrentTime] = useState(0); // 进度条滑动时间显示
+
+  const [volumeShow, setVolumeShow] = useState(false); //音量拖动条点击判断
+  const [currentVolume, setCurrentVolume] = useState(75); // 当前音量显示
 
   const onMouseDown = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -103,17 +107,68 @@ const reactComponent: React.FC<PropsType> = props => {
     !show && setCurrent(state.current);
   }, [state.current]);
 
+  const onVolumeDown = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setVolumeShow(true);
+  };
+
+  const onVolumeUp = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!volumeShow) return;
+    methods.changeVolume(currentVolume / 100);
+    setVolumeShow(false);
+  };
+
+  const onVolumeMove = (e: React.MouseEvent) => {
+    if (e.buttons !== 1) return;
+    const volume = getVolume(e);
+    if (typeof volume === 'object') return;
+    setVolumeShow && setCurrentVolume(volume);
+  };
+
+  const onVolumeMute = (e: React.MouseEvent) => {
+    methods.changeVolume(state.volume ? 0 : 0.75);
+  };
+
+  const getVolume = (e: React.MouseEvent) => {
+    if (e.target !== volumeRef.current) return;
+    const offset = e.nativeEvent.offsetY;
+    const total = volumeRef.current ? volumeRef.current.clientHeight : 0;
+
+    if (total === 0) return null;
+    let height = total - 8 - offset;
+    height <= 0 && (height = 0);
+    height > 70 && (height = 70);
+    return Math.round((height / 70) * 100);
+  };
+
+  useEffect(() => {
+    !volumeShow && setCurrentVolume(Math.round(state.volume * 100));
+  }, [state.volume]);
+
+  const preventDefault = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const togglePlay = () => {
+    methods.changePlay();
+  };
+
   return (
     <div
       className={`${styles.control} ${state.play ? styles.play : styles.pause}`}
       onMouseUp={onMouseUp}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseUp}
+      onClick={togglePlay}
     >
       {state.message && <div className={styles.message}>{state.message}</div>}
       {state.loading && <Icon type="loading" className={styles.loading}></Icon>}
 
-      <div className={styles.bar}>
+      <div className={styles.bar} onClick={preventDefault}>
         <div className={styles.content}>
           <div
             className={styles.progress}
@@ -176,12 +231,30 @@ const reactComponent: React.FC<PropsType> = props => {
               </div>
             </div>
             <div className={styles.right}>
-              <div
-                className={styles.icon}
-                onClick={() => methods.changeVolume(state.volume ? 0 : 0.75)}
-              >
+              <div className={styles.icon} onMouseUp={onVolumeMute}>
                 {volumeNode(state.volume)}
-                <div className={styles.volumePanel}></div>
+                <div className={styles.volumePanel}>
+                  <div className={styles.volumeCon}>
+                    <div
+                      className={styles.volumeBg}
+                      ref={volumeRef}
+                      onMouseMove={onVolumeMove}
+                      onMouseUp={onVolumeUp}
+                      onMouseDown={onVolumeDown}
+                      onMouseOut={onVolumeUp}
+                    ></div>
+                    <span>{currentVolume}</span>
+                    <div className={styles.volumeProgress}>
+                      <div
+                        className={styles.volumeCurrent}
+                        style={{
+                          backgroundColor: color,
+                          height: currentVolume + '%',
+                        }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div className={styles.icon}>
                 <Icon type="setting" className={styles.iconfont}></Icon>

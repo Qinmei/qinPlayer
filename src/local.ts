@@ -1,4 +1,4 @@
-const lang = {
+const lang: any = {
   CN: {
     setting: '设置',
     fullscreen: '进入全屏',
@@ -7,6 +7,7 @@ const lang = {
     intotheater: '剧场模式',
     picture: '画中画',
   },
+  EN: {},
 };
 
 export default lang;

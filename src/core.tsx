@@ -23,6 +23,14 @@ const reactComponent: React.FC<PropsType> = props => {
   } = data;
 
   const onMethods = {
+    onPlaying: () => {
+      methods.changePlay(true);
+    },
+
+    onPause: () => {
+      methods.changePlay(false);
+    },
+
     onDurationChange: (e: any) => {
       const { duration } = e.target;
       methods.changeDuration(duration);
@@ -94,15 +102,31 @@ const reactComponent: React.FC<PropsType> = props => {
         autoPlay={autoplay}
         loop={loop}
         controls={false}
-        // onLoadStart={e => console.log(e)}
-        // onError={e => console.log(e)}
+        onPlaying={onMethods.onPlaying}
+        onPause={onMethods.onPause}
         onDurationChange={onMethods.onDurationChange}
         onProgress={onMethods.onProgress}
         onTimeUpdate={onMethods.onTimeUpdate}
-        // onSuspend={onMethods.onSuspend}
         onWaiting={onMethods.onWaiting}
         onCanPlay={onMethods.onCanPlay}
-        // onSeeked={e => console.log(e)}
+        //
+        // 其他事件
+        onAbort={() => {}}
+        onCanPlayThrough={() => {}}
+        onEmptied={() => {}}
+        onEncrypted={() => {}}
+        onEnded={() => {}}
+        onError={() => {}}
+        onLoadedData={() => {}}
+        onLoadedMetadata={() => {}}
+        onLoadStart={() => {}}
+        onPlay={() => {}}
+        onRateChange={() => {}}
+        onSeeked={() => {}}
+        onSeeking={() => {}}
+        onStalled={() => {}}
+        onSuspend={() => {}}
+        onVolumeChange={() => {}}
         ref={videoRef}
       ></video>
       {children}
