@@ -32,14 +32,6 @@
     left: 0;
     overflow: hidden;
 
-    &.play {
-      display: none;
-    }
-
-    &.pause {
-      display: block;
-    }
-
     .message {
       position: absolute;
       bottom: 60px;
@@ -71,12 +63,26 @@
       }
     }
 
+    &:hover {
+      .bar.play {
+        display: block;
+      }
+    }
+
     .bar {
       position: absolute;
       width: 100%;
       left: 0;
       bottom: 0;
       z-index: 9;
+      display: none;
+
+      &.play {
+      }
+
+      &.pause {
+        display: block;
+      }
 
       &:before {
         content: '';
@@ -137,6 +143,8 @@
             .iconfont {
               width: 25px;
               height: 20px;
+              color: white;
+              fill: currentColor;
             }
 
             .tips {
@@ -218,9 +226,94 @@
               }
             }
 
+            .settingPanel {
+              position: absolute;
+              bottom: 45px;
+              right: -65px;
+              cursor: default;
+              color: #fff;
+              width: 266px;
+              box-sizing: border-box;
+              background: rgba(21, 21, 21, 0.9);
+              border-radius: 2px;
+              padding: 12px 20px;
+              text-align: left;
+              font-size: 12px;
+              // display: none;
+
+              &:before {
+                content: '';
+                width: 100%;
+                height: 30px;
+                position: absolute;
+                bottom: -15px;
+                right: 0;
+                z-index: 29;
+              }
+
+              &:after {
+                content: '';
+                width: 35px;
+                height: 30px;
+                position: absolute;
+                bottom: -20px;
+                right: 65px;
+                z-index: 29;
+              }
+
+              .settingCon {
+                width: 100%;
+                height: auto;
+
+                p {
+                  margin: 0;
+                }
+
+                .settingList {
+                  margin-bottom: 12px;
+                  .labelCon {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+
+                    .labelList {
+                      margin-top: 6px;
+                      width: calc((100% - 16px) / 3);
+                      background-color: hsla(0, 0%, 100%, 0.3);
+                      line-height: 24px;
+                      border-radius: 2px;
+                      text-align: center;
+                      cursor: pointer;
+
+                      &:hover {
+                        background-color: hsla(0, 0%, 100%, 0.4);
+                      }
+                    }
+
+                    .labelList2 {
+                      width: calc((100% - 16px) / 3);
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+                      height: 26px;
+                      cursor: pointer;
+
+                      .nocheck {
+                        width: 14px;
+                        height: 14px;
+                        margin-right: 6px;
+                        fill: currentColor;
+                      }
+                    }
+                  }
+                }
+              }
+            }
+
             &:hover {
               .tips,
-              .volumePanel {
+              .volumePanel,
+              .settingPanel {
                 display: inline-block;
               }
             }

@@ -14,6 +14,7 @@ interface DataType {
   seeked?: number;
   volume?: number;
   fullscreen?: boolean;
+  webscreen?: boolean;
   picture?: boolean;
   movie?: boolean;
   message?: string;
@@ -33,6 +34,7 @@ const data: DataType = {
   seeked: 0,
   volume: 0.75,
   fullscreen: false,
+  webscreen: false,
   movie: false,
   message: '',
   lang: 'CN',
@@ -70,6 +72,7 @@ const PlayerProvider = (props: PropsType) => {
   const methods = {
     changePlay: (value: boolean = !state.play) => sendData('play', value),
     changeScreen: (value: boolean = !state.fullscreen) => sendData('fullscreen', value),
+    changeWebScreen: (value: boolean = !state.webscreen) => sendData('webscreen', value),
     changeMovie: (value: boolean = !state.movie) => sendData('movie', value),
     changeVolume: (value: number = 0.75) => sendData('volume', value),
     changeCurrent: (value: number = state.current) => sendData('current', value),

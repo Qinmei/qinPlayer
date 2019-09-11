@@ -159,7 +159,7 @@ const reactComponent: React.FC<PropsType> = props => {
 
   return (
     <div
-      className={`${styles.control} ${state.play ? styles.play : styles.pause}`}
+      className={styles.control}
       onMouseUp={onMouseUp}
       onMouseMove={onMouseMove}
       onMouseLeave={onMouseUp}
@@ -168,7 +168,10 @@ const reactComponent: React.FC<PropsType> = props => {
       {state.message && <div className={styles.message}>{state.message}</div>}
       {state.loading && <Icon type="loading" className={styles.loading}></Icon>}
 
-      <div className={styles.bar} onClick={preventDefault}>
+      <div
+        className={`${styles.bar} ${state.play ? styles.play : styles.pause}`}
+        onClick={preventDefault}
+      >
         <div className={styles.content}>
           <div
             className={styles.progress}
@@ -258,19 +261,48 @@ const reactComponent: React.FC<PropsType> = props => {
               </div>
               <div className={styles.icon}>
                 <Icon type="setting" className={styles.iconfont}></Icon>
+                <div className={styles.settingPanel}>
+                  <div className={styles.settingCon}>
+                    <div className={styles.settingList}>
+                      <p>{lang[state.lang].playMode}</p>
+                      <div className={styles.labelCon}>
+                        <div className={styles.labelList}>{lang[state.lang].default}</div>
+                        <div className={styles.labelList}>{lang[state.lang].autoLoop}</div>
+                        <div className={styles.labelList}>{lang[state.lang].endStop}</div>
+                      </div>
+                    </div>
+                    <div className={styles.settingList}>
+                      <p>{lang[state.lang].playRate}</p>
+                      <div className={styles.labelCon}></div>
+                    </div>
+                    <div className={styles.settingList} style={{ marginBottom: 0 }}>
+                      <p>{lang[state.lang].playSetting}</p>
+                      <div className={styles.labelCon}>
+                        <div className={styles.labelList2}>
+                          <Icon type="nocheck" className={styles.nocheck}></Icon>
+                          {lang[state.lang].noLight}
+                        </div>
+                        <div className={styles.labelList2}>
+                          <Icon type="nocheck" className={styles.nocheck}></Icon>
+                          {lang[state.lang].picture}
+                        </div>
+                        <div className={styles.labelList2}>
+                          <Icon type="nocheck" className={styles.nocheck}></Icon>
+                          {lang[state.lang].intotheater}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className={styles.icon} onClick={() => methods.changePicture()}>
-                <Icon type="picture" className={styles.iconfont}></Icon>
-                <div className={styles.tips}>{lang[state.lang].picture}</div>
-              </div>
-              <div className={styles.icon} onClick={() => methods.changeMovie()}>
-                {state.movie ? (
-                  <Icon type="exittheater" className={styles.iconfont}></Icon>
+              <div className={styles.icon} onClick={() => methods.changeWebScreen()}>
+                {state.webscreen ? (
+                  <Icon type="exitweb" className={styles.iconfont}></Icon>
                 ) : (
-                  <Icon type="intotheater" className={styles.iconfont}></Icon>
+                  <Icon type="webscreen" className={styles.iconfont}></Icon>
                 )}
                 <div className={styles.tips}>
-                  {lang[state.lang][state.movie ? 'exittheater' : 'intotheater']}
+                  {lang[state.lang][state.webscreen ? 'exitweb' : 'webscreen']}
                 </div>
               </div>
               <div className={styles.icon} onClick={() => methods.changeScreen()}>
