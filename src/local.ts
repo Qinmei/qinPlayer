@@ -14,6 +14,9 @@ const lang: any = {
     default: '默认',
     autoLoop: '自动循环',
     endStop: '播完暂停',
+    showSubtitle: '字幕设置',
+    subtitle: '显示字幕',
+    nosubtitle: '隐藏字幕',
   },
   EN: {},
 };

@@ -16,13 +16,17 @@ interface DataType {
   fullscreen?: boolean;
   webscreen?: boolean;
   picture?: boolean;
+  light?: boolean;
   movie?: boolean;
   message?: string;
+  rate?: number;
+  loop: boolean;
   lang?: string;
-  thumbnail: {
+  thumbnail?: {
     count: number;
     urls: Array<string>;
   };
+  subtitle?: boolean;
 }
 
 const data: DataType = {
@@ -35,7 +39,12 @@ const data: DataType = {
   volume: 0.75,
   fullscreen: false,
   webscreen: false,
+  picture: false,
+  light: true,
   movie: false,
+  rate: 1,
+  loop: false,
+  subtitle: true,
   message: '',
   lang: 'CN',
   thumbnail: {
@@ -82,6 +91,10 @@ const PlayerProvider = (props: PropsType) => {
     changeLoading: (value: boolean = !state.loading) => sendData('loading', value),
     changeMessage: (value: string = '') => sendData('message', value),
     changePicture: (value: boolean = !state.picture) => sendData('picture', value),
+    changeLight: (value: boolean = !state.light) => sendData('light', value),
+    changeLoop: (value: boolean = !state.loop) => sendData('loop', value),
+    changeRate: (value: number = 1) => sendData('rate', value),
+    changeSubtitle: (value: boolean = !state.subtitle) => sendData('subtitle', value),
   };
 
   return (

@@ -7,18 +7,18 @@ interface PropsType {
   poster: string;
   preload?: string;
   autoplay?: boolean;
-  loop?: boolean;
+  subtitle?: string;
   children: any;
 }
 
 const reactComponent: React.FC<PropsType> = props => {
-  const { source, poster, preload, autoplay, loop, children } = props;
+  const { source, poster, preload, autoplay, subtitle: subtitleUrl, children } = props;
   const playerRef: any = useRef(null);
   const videoRef: any = useRef(null);
 
   const data: any = useContext(PlayerContext);
   const {
-    state: { play, current, volume, fullscreen, movie, seeked, picture },
+    state: { play, current, volume, fullscreen, movie, seeked, picture, rate, loop, subtitle },
     methods,
   } = data;
 
@@ -73,6 +73,11 @@ const reactComponent: React.FC<PropsType> = props => {
     videoRef.current.volume = volume;
   }, [volume]);
 
+  // 速率
+  useEffect(() => {
+    videoRef.current.playbackRate = rate;
+  }, [rate]);
+
   // 全屏
   useEffect(() => {
     if (fullscreen) {
@@ -92,9 +97,14 @@ const reactComponent: React.FC<PropsType> = props => {
     }
   }, [picture]);
 
+  useEffect(() => {
+    console.log(videoRef.current);
+  }, []);
+
   return (
     <div className={styles.wrapper} ref={playerRef}>
       <video
+        crossOrigin="anonymous"
         className={styles.video}
         src={source}
         poster={poster}
@@ -128,7 +138,16 @@ const reactComponent: React.FC<PropsType> = props => {
         onSuspend={() => {}}
         onVolumeChange={() => {}}
         ref={videoRef}
-      ></video>
+      >
+        {subtitle && (
+          <track
+            kind="metadata"
+            default
+            src={subtitleUrl}
+            onChange={() => console.log('sdsdsd')}
+          ></track>
+        )}
+      </video>
       {children}
     </div>
   );
