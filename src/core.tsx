@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import styles from './style.less';
 import { PlayerContext } from './model';
+import { getStyleName } from './utils';
 
 interface PropsType {
   source: string;
@@ -18,7 +19,21 @@ const reactComponent: React.FC<PropsType> = props => {
 
   const data: any = useContext(PlayerContext);
   const {
-    state: { play, current, volume, fullscreen, movie, seeked, picture, rate, loop, subtitle },
+    state: {
+      play,
+      current,
+      volume,
+      fullscreen,
+      movie,
+      seeked,
+      picture,
+      rate,
+      loop,
+      subtitle,
+      subcolor,
+      subsize,
+      submargin,
+    },
     methods,
   } = data;
 
@@ -97,57 +112,55 @@ const reactComponent: React.FC<PropsType> = props => {
     }
   }, [picture]);
 
-  useEffect(() => {
-    console.log(videoRef.current);
-  }, []);
-
   return (
     <div className={styles.wrapper} ref={playerRef}>
-      <video
-        crossOrigin="anonymous"
-        className={styles.video}
-        src={source}
-        poster={poster}
-        preload={preload}
-        autoPlay={autoplay}
-        loop={loop}
-        controls={false}
-        onPlaying={onMethods.onPlaying}
-        onPause={onMethods.onPause}
-        onDurationChange={onMethods.onDurationChange}
-        onProgress={onMethods.onProgress}
-        onTimeUpdate={onMethods.onTimeUpdate}
-        onWaiting={onMethods.onWaiting}
-        onCanPlay={onMethods.onCanPlay}
-        //
-        // 其他事件
-        onAbort={() => {}}
-        onCanPlayThrough={() => {}}
-        onEmptied={() => {}}
-        onEncrypted={() => {}}
-        onEnded={() => {}}
-        onError={() => {}}
-        onLoadedData={() => {}}
-        onLoadedMetadata={() => {}}
-        onLoadStart={() => {}}
-        onPlay={() => {}}
-        onRateChange={() => {}}
-        onSeeked={() => {}}
-        onSeeking={() => {}}
-        onStalled={() => {}}
-        onSuspend={() => {}}
-        onVolumeChange={() => {}}
-        ref={videoRef}
+      <div
+        className={`
+        ${styles.subtitle} 
+        ${getStyleName(styles, 'size', subsize)} 
+        ${getStyleName(styles, 'margin', submargin)}
+        ${getStyleName(styles, 'color', subcolor)}
+        `}
       >
-        {subtitle && (
-          <track
-            kind="metadata"
-            default
-            src={subtitleUrl}
-            onChange={() => console.log('sdsdsd')}
-          ></track>
-        )}
-      </video>
+        <video
+          crossOrigin="anonymous"
+          className={styles.video}
+          src={source}
+          poster={poster}
+          preload={preload}
+          autoPlay={autoplay}
+          loop={loop}
+          controls={false}
+          onPlaying={onMethods.onPlaying}
+          onPause={onMethods.onPause}
+          onDurationChange={onMethods.onDurationChange}
+          onProgress={onMethods.onProgress}
+          onTimeUpdate={onMethods.onTimeUpdate}
+          onWaiting={onMethods.onWaiting}
+          onCanPlay={onMethods.onCanPlay}
+          //
+          // 其他事件
+          onAbort={() => {}}
+          onCanPlayThrough={() => {}}
+          onEmptied={() => {}}
+          onEncrypted={() => {}}
+          onEnded={() => {}}
+          onError={() => {}}
+          onLoadedData={() => {}}
+          onLoadedMetadata={() => {}}
+          onLoadStart={() => {}}
+          onPlay={() => {}}
+          onRateChange={() => {}}
+          onSeeked={() => {}}
+          onSeeking={() => {}}
+          onStalled={() => {}}
+          onSuspend={() => {}}
+          onVolumeChange={() => {}}
+          ref={videoRef}
+        >
+          {subtitle && <track kind="subtitles" default src={subtitleUrl}></track>}
+        </video>
+      </div>
       {children}
     </div>
   );

@@ -17,12 +17,102 @@
     background-position: center;
     background-size: cover;
     background-color: black;
+  }
 
-    &::cue {
+  .subtitle {
+    .video::cue {
       background-color: transparent;
-      color: white;
-      font-size: 20px;
-      line-height: 100px;
+    }
+    &.size-1 {
+      .video::cue {
+        font-size: 12px;
+      }
+    }
+    &.size-2 {
+      .video::cue {
+        font-size: 24px;
+      }
+    }
+    &.size-3 {
+      .video::cue {
+        font-size: 36px;
+      }
+    }
+    &.size-4 {
+      .video::cue {
+        font-size: 48px;
+      }
+    }
+    &.size-5 {
+      .video::cue {
+        font-size: 60px;
+      }
+    }
+
+    &.margin-1 {
+      .video::cue {
+        line-height: 30px;
+      }
+    }
+    &.margin-2 {
+      .video::cue {
+        line-height: 60px;
+      }
+    }
+    &.margin-3 {
+      .video::cue {
+        line-height: 100px;
+      }
+    }
+    &.margin-4 {
+      .video::cue {
+        line-height: 140px;
+      }
+    }
+    &.margin-5 {
+      .video::cue {
+        line-height: 180px;
+      }
+    }
+    &.color-1 {
+      .video::cue {
+        color: white;
+      }
+    }
+    &.color-2 {
+      .video::cue {
+        color: #ff0000;
+      }
+    }
+    &.color-3 {
+      .video::cue {
+        color: #ff7d00;
+      }
+    }
+    &.color-4 {
+      .video::cue {
+        color: #ffff00;
+      }
+    }
+    &.color-5 {
+      .video::cue {
+        color: #00ff00;
+      }
+    }
+    &.color-6 {
+      .video::cue {
+        color: #0000ff;
+      }
+    }
+    &.color-7 {
+      .video::cue {
+        color: #00ffff;
+      }
+    }
+    &.color-8 {
+      .video::cue {
+        color: #ff00ff;
+      }
     }
   }
 
@@ -59,6 +149,7 @@
       top: 50%;
       transform: translate(-50%, -50%);
       animation: rotate 1s linear infinite;
+      fill: white;
 
       @keyframes rotate {
         from {
@@ -358,6 +449,58 @@
                         .rateSelect {
                           right: 0px;
                         }
+                      }
+
+                      &.sec4 {
+                        width: 25%;
+
+                        &:nth-child(1) {
+                          width: 12.5%;
+                        }
+
+                        &:nth-last-child(1) {
+                          width: 12.5%;
+                        }
+                      }
+                    }
+
+                    .labelList12 {
+                      width: 18px;
+                      height: 18px;
+                      border-radius: 50%;
+                      cursor: pointer;
+                      display: flex;
+                      justify-content: center;
+                      align-items: center;
+
+                      .selectIcon {
+                        width: 14px;
+                        height: 14px;
+                      }
+
+                      &:nth-child(1) {
+                        background-color: white;
+                      }
+                      &:nth-child(2) {
+                        background-color: #ff0000;
+                      }
+                      &:nth-child(3) {
+                        background-color: #ff7d00;
+                      }
+                      &:nth-child(4) {
+                        background-color: #ffff00;
+                      }
+                      &:nth-child(5) {
+                        background-color: #00ff00;
+                      }
+                      &:nth-child(6) {
+                        background-color: #0000ff;
+                      }
+                      &:nth-child(7) {
+                        background-color: #00ffff;
+                      }
+                      &:nth-child(8) {
+                        background-color: #ff00ff;
                       }
                     }
 

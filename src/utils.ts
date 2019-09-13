@@ -14,3 +14,9 @@ export const timeTransfer = (time: number) => {
 export const numFixTwo = (num: number) => {
   return num > 9 ? num : `0${num}`;
 };
+
+export const getStyleName = (styles: any, type: string, prefix: any) => {
+  const total: string = type + '-' + prefix;
+  console.log(total);
+  return styles[total];
+};

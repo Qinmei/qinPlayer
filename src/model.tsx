@@ -6,27 +6,30 @@ interface PropsType {
 }
 
 interface DataType {
-  play?: boolean;
-  loading?: boolean;
-  duration?: number;
-  buffered?: Array<Array<number>>;
-  current?: number;
-  seeked?: number;
-  volume?: number;
-  fullscreen?: boolean;
-  webscreen?: boolean;
-  picture?: boolean;
-  light?: boolean;
-  movie?: boolean;
-  message?: string;
-  rate?: number;
+  play: boolean;
+  loading: boolean;
+  duration: number;
+  buffered: Array<Array<number>>;
+  current: number;
+  seeked: number;
+  volume: number;
+  fullscreen: boolean;
+  webscreen: boolean;
+  picture: boolean;
+  light: boolean;
+  movie: boolean;
+  message: string;
+  rate: number;
   loop: boolean;
-  lang?: string;
-  thumbnail?: {
+  lang: string;
+  thumbnail: {
     count: number;
     urls: Array<string>;
   };
-  subtitle?: boolean;
+  subtitle: boolean;
+  subsize: number;
+  subcolor: number;
+  submargin: number;
 }
 
 const data: DataType = {
@@ -45,6 +48,9 @@ const data: DataType = {
   rate: 1,
   loop: false,
   subtitle: true,
+  subsize: 3,
+  subcolor: 1,
+  submargin: 3,
   message: '',
   lang: 'CN',
   thumbnail: {
@@ -95,6 +101,9 @@ const PlayerProvider = (props: PropsType) => {
     changeLoop: (value: boolean = !state.loop) => sendData('loop', value),
     changeRate: (value: number = 1) => sendData('rate', value),
     changeSubtitle: (value: boolean = !state.subtitle) => sendData('subtitle', value),
+    changeSubColor: (value: number = state.subcolor) => sendData('subcolor', value),
+    changeSubSize: (value: number = state.subsize) => sendData('subsize', value),
+    changeSubMargin: (value: number = state.submargin) => sendData('submargin', value),
   };
 
   return (

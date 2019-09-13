@@ -28,6 +28,8 @@ const volumeNode = (volume: number) => {
 };
 
 const rateArr = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
+const sizeArr = [1, 2, 3, 4, 5];
+const colorArr = [1, 2, 3, 4, 5, 6, 7, 8];
 
 const reactComponent: React.FC<PropsType> = props => {
   const { color } = props;
@@ -285,19 +287,42 @@ const reactComponent: React.FC<PropsType> = props => {
                       </div>
                     </div>
                     <div className={styles.settingList}>
-                      <p>{lang[state.lang].playRate}</p>
+                      <p>{lang[state.lang].subsize}</p>
                       <div className={styles.labelCon}>
-                        {rateArr.map((item: number) => (
+                        {sizeArr.map((item: number) => (
                           <div
-                            className={styles.labelList1}
-                            onClick={() => methods.changeRate(item)}
+                            className={`${styles.labelList1} ${styles.sec4}`}
+                            onClick={() => methods.changeSubSize(item)}
                             key={item}
                           >
                             <span className={styles.rate}>
-                              {[0.75, 1.25].includes(item) ? item : item.toFixed(1)}
+                              {lang[state.lang]['subsize' + item]}
                             </span>
                             <span className={styles.ratedot}></span>
-                            {state.rate === item && (
+                            {state.subsize === item && (
+                              <span
+                                className={styles.rateSelect}
+                                style={{ backgroundColor: color }}
+                              ></span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                    <div className={styles.settingList}>
+                      <p>{lang[state.lang].submargin}</p>
+                      <div className={styles.labelCon}>
+                        {sizeArr.map((item: number) => (
+                          <div
+                            className={`${styles.labelList1} ${styles.sec4}`}
+                            onClick={() => methods.changeSubMargin(item)}
+                            key={item}
+                          >
+                            <span className={styles.rate}>
+                              {lang[state.lang]['submargin' + item]}
+                            </span>
+                            <span className={styles.ratedot}></span>
+                            {state.submargin === item && (
                               <span
                                 className={styles.rateSelect}
                                 style={{ backgroundColor: color }}
@@ -308,44 +333,23 @@ const reactComponent: React.FC<PropsType> = props => {
                       </div>
                     </div>
                     <div className={styles.settingList} style={{ marginBottom: 0 }}>
-                      <p>{lang[state.lang].playSetting}</p>
-                      <div className={styles.labelCon}>
-                        <div
-                          className={styles.labelList2}
-                          style={!state.light ? { color } : {}}
-                          onClick={() => methods.changeLight()}
-                        >
-                          {state.light ? (
-                            <Icon type="nocheck" className={styles.check}></Icon>
-                          ) : (
-                            <Icon type="checked" className={styles.check}></Icon>
-                          )}
-                          {lang[state.lang].noLight}
-                        </div>
-                        <div
-                          className={styles.labelList2}
-                          style={state.picture ? { color } : {}}
-                          onClick={() => methods.changePicture()}
-                        >
-                          {!state.picture ? (
-                            <Icon type="nocheck" className={styles.check}></Icon>
-                          ) : (
-                            <Icon type="checked" className={styles.check}></Icon>
-                          )}
-                          {lang[state.lang].picture}
-                        </div>
-                        <div
-                          className={styles.labelList2}
-                          style={state.movie ? { color } : {}}
-                          onClick={() => methods.changeMovie()}
-                        >
-                          {!state.movie ? (
-                            <Icon type="nocheck" className={styles.check}></Icon>
-                          ) : (
-                            <Icon type="checked" className={styles.check}></Icon>
-                          )}
-                          {lang[state.lang].intotheater}
-                        </div>
+                      <p>{lang[state.lang].subcolor}</p>
+                      <div className={styles.labelCon} style={{ marginTop: '8px' }}>
+                        {colorArr.map((item: number) => (
+                          <div
+                            className={`${styles.labelList12} ${styles['color' + item]}`}
+                            onClick={() => methods.changeSubColor(item)}
+                            key={item}
+                          >
+                            {state.subcolor === item && (
+                              <Icon
+                                type="select"
+                                color="transparent"
+                                className={styles.selectIcon}
+                              ></Icon>
+                            )}
+                          </div>
+                        ))}
                       </div>
                     </div>
                   </div>
