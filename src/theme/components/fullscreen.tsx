@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import Icon from './icon';
 import { PlayerContext } from '../../model';
 import lang from '../../utils/local';
@@ -45,10 +45,9 @@ const Wrapper = styled.div`
 const reactComponent: React.FC<{}> = props => {
   const data = useContext(PlayerContext);
   const { methods, state } = data;
-  const { color } = state;
 
   return (
-    <Wrapper color={color} onClick={() => methods.changeScreen()}>
+    <Wrapper onClick={() => methods.changeScreen()}>
       <Icon type={state.fullscreen ? 'exitscreen' : 'fullscreen'} className="iconfont"></Icon>
       <div className="tips">{lang[state.lang][state.fullscreen ? 'exitscreen' : 'fullscreen']}</div>
     </Wrapper>

@@ -24,10 +24,9 @@ const Wrapper = styled.div`
 const reactComponent: React.FC<{}> = props => {
   const data = useContext(PlayerContext);
   const { methods, state } = data;
-  const { color } = state;
 
   return (
-    <Wrapper color={color} onClick={() => methods.changePlay()}>
+    <Wrapper onClick={() => methods.changePlay()}>
       <Icon type={state.play ? 'pause' : 'play'} className="iconfont"></Icon>
     </Wrapper>
   );

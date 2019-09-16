@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { PlayerContext } from '../../model';
 import styled from 'styled-components';
 import Icon from './icon';
@@ -27,13 +27,8 @@ const Wrapper = styled.div`
 
 const reactComponent: React.FC<{}> = props => {
   const data = useContext(PlayerContext);
-  const { methods, state } = data;
-  const { color } = state;
+  const { state } = data;
 
-  return (
-    <Wrapper color={color}>
-      {state.loading && <Icon type="loading" className="loading"></Icon>}
-    </Wrapper>
-  );
+  return <Wrapper>{state.loading && <Icon type="loading" className="loading"></Icon>}</Wrapper>;
 };
 export default reactComponent;

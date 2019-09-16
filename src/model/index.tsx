@@ -109,12 +109,8 @@ const PlayerProvider = (props: PropsType) => {
     message: '',
     lang: 'CN',
     thumbnail: {
-      count: 300,
-      urls: [
-        'https://i0.hdslb.com/bfs/videoshot/7539894-1.jpg',
-        'https://i0.hdslb.com/bfs/videoshot/7539894-2.jpg',
-        'https://i0.hdslb.com/bfs/videoshot/7539894-3.jpg',
-      ],
+      count: 0,
+      urls: [],
     },
     ...initData,
   };

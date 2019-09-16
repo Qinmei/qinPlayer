@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { PlayerContext } from '../../model';
 import styled from 'styled-components';
 import { timeTransfer } from '../../utils/utils';
@@ -13,11 +13,10 @@ const Wrapper = styled.div`
 
 const reactComponent: React.FC<{}> = props => {
   const data = useContext(PlayerContext);
-  const { methods, state } = data;
-  const { color } = state;
+  const { state } = data;
 
   return (
-    <Wrapper color={color}>
+    <Wrapper>
       <span>{timeTransfer(state.current)}</span>
       <span> / </span>
       <span>{timeTransfer(state.duration)}</span>

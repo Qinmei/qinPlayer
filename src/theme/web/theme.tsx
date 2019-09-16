@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import styles from './style.less';
 import { PlayerContext } from '../../model';
 import Subtitle from '../components/subtitle';
@@ -42,7 +42,7 @@ const reactComponent: React.FC<{}> = props => {
             </div>
             <div className={styles.right}>
               <Volume></Volume>
-              <Subtitle></Subtitle>
+              {state.subtitle && <Subtitle></Subtitle>}
               <Setting></Setting>
               <WebScreen></WebScreen>
               <FullScreen></FullScreen>

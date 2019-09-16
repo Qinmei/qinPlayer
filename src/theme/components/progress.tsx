@@ -1,11 +1,4 @@
-import React, {
-  useEffect,
-  useRef,
-  useState,
-  useContext,
-  useImperativeHandle,
-  forwardRef,
-} from 'react';
+import React, { useEffect, useRef, useState, useContext } from 'react';
 import { PlayerContext } from '../../model';
 import styled from 'styled-components';
 import { timeTransfer } from '../../utils/utils';
@@ -155,7 +148,6 @@ const reactComponent: React.FC<{}> = props => {
 
   return (
     <Wrapper
-      color={color}
       className="progress"
       ref={progressRef}
       onMouseDown={onMouseDown}

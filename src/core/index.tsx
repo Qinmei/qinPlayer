@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import { PlayerContext } from '../model';
-import { getStyleName } from '../utils/utils';
 import styled from 'styled-components';
+import { enterFullscreen, exitFullscreen } from './compatibility';
 
 const Wrapper = styled.div`
   position: relative;
@@ -11,8 +11,33 @@ const Wrapper = styled.div`
   justify-content: center;
   align-items: center;
 
+  &.webscreen {
+    position: fixed;
+    z-index: 100000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+  }
+
+  &.nolight {
+    z-index: 100000;
+    &:after {
+      content: '';
+      position: fixed;
+      z-index: -1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+    }
+  }
+
   .video {
     width: 100%;
+    max-height: 100%;
     background-position: center;
     background-size: cover;
     background-color: black;
@@ -58,6 +83,8 @@ const reactComponent: React.FC<PropsType> = props => {
       subcolor,
       subsize,
       submargin,
+      webscreen,
+      light,
     },
     methods,
   } = data;
@@ -121,15 +148,16 @@ const reactComponent: React.FC<PropsType> = props => {
   // 全屏
   useEffect(() => {
     if (fullscreen) {
-      playerRef.current.webkitRequestFullScreen();
+      enterFullscreen(playerRef.current);
     } else {
-      document.webkitCancelFullScreen();
+      exitFullscreen();
     }
   }, [fullscreen]);
 
   // 画中画
 
   useEffect(() => {
+    if (!document.pictureInPictureEnabled) return;
     if (picture) {
       videoRef.current.requestPictureInPicture();
     } else {
@@ -138,7 +166,13 @@ const reactComponent: React.FC<PropsType> = props => {
   }, [picture]);
 
   return (
-    <Wrapper ref={playerRef} color={subcolor} size={subsize} height={submargin}>
+    <Wrapper
+      ref={playerRef}
+      color={subcolor}
+      size={subsize}
+      height={submargin}
+      className={(webscreen ? 'webscreen' : '') + (light ? ' nolight' : '')}
+    >
       <video
         crossOrigin="anonymous"
         className="video"

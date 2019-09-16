@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import Icon from './icon';
 import { PlayerContext } from '../../model';
 import lang from '../../utils/local';

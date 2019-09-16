@@ -51,17 +51,21 @@ const reactComponent: React.FC<PropsType> = props => {
   };
 
   return (
-    <Wrapper
-      color={color}
-      className="thumbnail"
-      style={{
-        left: getThumbnailLeft(currentTime) + '%',
-        backgroundImage: `url(${getThumbnailImg(currentTime).url})`,
-        backgroundPosition: `${getThumbnailImg(currentTime).left} ${
-          getThumbnailImg(currentTime).top
-        }`,
-      }}
-    ></Wrapper>
+    <>
+      {state.thumbnail && state.thumbnail.count > 0 && (
+        <Wrapper
+          color={color}
+          className="thumbnail"
+          style={{
+            left: getThumbnailLeft(currentTime) + '%',
+            backgroundImage: `url(${getThumbnailImg(currentTime).url})`,
+            backgroundPosition: `${getThumbnailImg(currentTime).left} ${
+              getThumbnailImg(currentTime).top
+            }`,
+          }}
+        ></Wrapper>
+      )}
+    </>
   );
 };
 export default reactComponent;

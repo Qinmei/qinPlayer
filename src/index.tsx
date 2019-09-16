@@ -1,6 +1,6 @@
 import React from 'react';
 import Core from './core';
-import PCTheme from './theme/pc/theme';
+import WebTheme from './theme/web/theme';
 import { PlayerProvider } from './model';
 
 interface PropsType {
@@ -19,7 +19,7 @@ const reactComponent: React.FC<PropsType> = props => {
   return (
     <PlayerProvider onStateChange={onStateChange} initData={args}>
       <Core>
-        <PCTheme />
+        <WebTheme />
       </Core>
     </PlayerProvider>
   );
