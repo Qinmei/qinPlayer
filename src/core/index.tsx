@@ -1,35 +1,60 @@
 import React, { useEffect, useRef, useContext } from 'react';
-import styles from './style.less';
-import { PlayerContext } from './model';
-import { getStyleName } from './utils';
+import { PlayerContext } from '../model';
+import { getStyleName } from '../utils/utils';
+import styled from 'styled-components';
+
+const Wrapper = styled.div`
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .video {
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    background-color: black;
+
+    &::-webkit-media-controls {
+      display: none !important;
+    }
+
+    &::cue {
+      background-color: transparent;
+      font-size: ${props => props.size};
+      line-height: ${props => props.height};
+      color: ${props => props.color};
+    }
+  }
+`;
 
 interface PropsType {
-  source: string;
-  poster: string;
-  preload?: string;
-  autoplay?: boolean;
-  subtitle?: string;
   children: any;
 }
 
 const reactComponent: React.FC<PropsType> = props => {
-  const { source, poster, preload, autoplay, subtitle: subtitleUrl, children } = props;
+  const { children } = props;
   const playerRef: any = useRef(null);
   const videoRef: any = useRef(null);
 
-  const data: any = useContext(PlayerContext);
+  const data = useContext(PlayerContext);
   const {
     state: {
+      source,
+      poster,
+      preload,
+      autoplay,
+      subtitle,
       play,
-      current,
       volume,
       fullscreen,
-      movie,
       seeked,
       picture,
       rate,
       loop,
-      subtitle,
+      subshow,
       subcolor,
       subsize,
       submargin,
@@ -113,56 +138,47 @@ const reactComponent: React.FC<PropsType> = props => {
   }, [picture]);
 
   return (
-    <div className={styles.wrapper} ref={playerRef}>
-      <div
-        className={`
-        ${styles.subtitle} 
-        ${getStyleName(styles, 'size', subsize)} 
-        ${getStyleName(styles, 'margin', submargin)}
-        ${getStyleName(styles, 'color', subcolor)}
-        `}
+    <Wrapper ref={playerRef} color={subcolor} size={subsize} height={submargin}>
+      <video
+        crossOrigin="anonymous"
+        className="video"
+        src={source}
+        poster={poster}
+        preload={preload}
+        autoPlay={autoplay}
+        loop={loop}
+        controls={false}
+        onPlaying={onMethods.onPlaying}
+        onPause={onMethods.onPause}
+        onDurationChange={onMethods.onDurationChange}
+        onProgress={onMethods.onProgress}
+        onTimeUpdate={onMethods.onTimeUpdate}
+        onWaiting={onMethods.onWaiting}
+        onCanPlay={onMethods.onCanPlay}
+        //
+        // 其他事件
+        onAbort={() => {}}
+        onCanPlayThrough={() => {}}
+        onEmptied={() => {}}
+        onEncrypted={() => {}}
+        onEnded={() => {}}
+        onError={() => {}}
+        onLoadedData={() => {}}
+        onLoadedMetadata={() => {}}
+        onLoadStart={() => {}}
+        onPlay={() => {}}
+        onRateChange={() => {}}
+        onSeeked={() => {}}
+        onSeeking={() => {}}
+        onStalled={() => {}}
+        onSuspend={() => {}}
+        onVolumeChange={() => {}}
+        ref={videoRef}
       >
-        <video
-          crossOrigin="anonymous"
-          className={styles.video}
-          src={source}
-          poster={poster}
-          preload={preload}
-          autoPlay={autoplay}
-          loop={loop}
-          controls={false}
-          onPlaying={onMethods.onPlaying}
-          onPause={onMethods.onPause}
-          onDurationChange={onMethods.onDurationChange}
-          onProgress={onMethods.onProgress}
-          onTimeUpdate={onMethods.onTimeUpdate}
-          onWaiting={onMethods.onWaiting}
-          onCanPlay={onMethods.onCanPlay}
-          //
-          // 其他事件
-          onAbort={() => {}}
-          onCanPlayThrough={() => {}}
-          onEmptied={() => {}}
-          onEncrypted={() => {}}
-          onEnded={() => {}}
-          onError={() => {}}
-          onLoadedData={() => {}}
-          onLoadedMetadata={() => {}}
-          onLoadStart={() => {}}
-          onPlay={() => {}}
-          onRateChange={() => {}}
-          onSeeked={() => {}}
-          onSeeking={() => {}}
-          onStalled={() => {}}
-          onSuspend={() => {}}
-          onVolumeChange={() => {}}
-          ref={videoRef}
-        >
-          {subtitle && <track kind="subtitles" default src={subtitleUrl}></track>}
-        </video>
-      </div>
+        {subshow && <track kind="subtitles" default src={subtitle}></track>}
+      </video>
       {children}
-    </div>
+    </Wrapper>
   );
 };
 export default reactComponent;
