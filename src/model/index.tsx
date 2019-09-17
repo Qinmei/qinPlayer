@@ -62,7 +62,7 @@ interface MethodsProps {
   changeLight: (value?: boolean) => void;
   changeLoop: (value?: boolean) => void;
   changeRate: (value?: number) => void;
-  changeSubtitle: (value?: boolean) => void;
+  changeSubShow: (value?: boolean) => void;
   changeSubColor: (value?: string) => void;
   changeSubSize: (value?: string) => void;
   changeSubMargin: (value?: string) => void;
@@ -141,7 +141,7 @@ const PlayerProvider = (props: PropsType) => {
     changeLight: (value: boolean = !state.light) => sendData('light', value),
     changeLoop: (value: boolean = !state.loop) => sendData('loop', value),
     changeRate: (value: number = 1) => sendData('rate', value),
-    changeSubtitle: (value: boolean = !state.subtitle) => sendData('subtitle', value),
+    changeSubShow: (value: boolean = !state.subshow) => sendData('subshow', value),
     changeSubColor: (value: string = state.subcolor) => sendData('subcolor', value),
     changeSubSize: (value: string = state.subsize) => sendData('subsize', value),
     changeSubMargin: (value: string = state.submargin) => sendData('submargin', value),

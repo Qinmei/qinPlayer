@@ -61,6 +61,7 @@ const Wrapper = styled.div`
 
       p {
         margin: 0;
+        user-select: none;
       }
 
       .secList {
@@ -203,15 +204,15 @@ const reactComponent: React.FC<{}> = props => {
             <div className="labelCon">
               <div
                 className="labelList"
-                style={state.subtitle ? { backgroundColor: color } : {}}
-                onClick={() => methods.changeSubtitle(true)}
+                style={state.subshow ? { backgroundColor: color } : {}}
+                onClick={() => methods.changeSubShow(true)}
               >
                 {lang[state.lang].subtitle}
               </div>
               <div
                 className="labelList"
-                style={!state.subtitle ? { backgroundColor: color } : {}}
-                onClick={() => methods.changeSubtitle(false)}
+                style={!state.subshow ? { backgroundColor: color } : {}}
+                onClick={() => methods.changeSubShow(false)}
               >
                 {lang[state.lang].nosubtitle}
               </div>

@@ -48,8 +48,8 @@ const reactComponent: React.FC<{}> = props => {
 
   return (
     <Wrapper onClick={() => methods.changeScreen()}>
-      <Icon type={state.fullscreen ? 'exitscreen' : 'fullscreen'} className="iconfont"></Icon>
-      <div className="tips">{lang[state.lang][state.fullscreen ? 'exitscreen' : 'fullscreen']}</div>
+      <Icon type="fullscreen" className="iconfont"></Icon>
+      <div className="tips">{lang[state.lang]['fullscreen']}</div>
     </Wrapper>
   );
 };

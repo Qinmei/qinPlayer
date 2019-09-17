@@ -114,9 +114,11 @@ const reactComponent: React.FC<PropsType> = props => {
       methods.changeBuffered(buffer);
     },
     onWaiting: () => {
+      console.log('loadingstart');
       methods.changeLoading(true);
     },
     onCanPlay: () => {
+      console.log('loadingstart');
       methods.changeLoading(false);
     },
   };

@@ -61,6 +61,7 @@ const Wrapper = styled.div`
 
       p {
         margin: 0;
+        user-select: none;
       }
 
       .secList {
