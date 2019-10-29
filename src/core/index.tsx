@@ -3,8 +3,8 @@ import { PlayerContext } from '../model';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
-  width: ${props => props.percent}%;
-  height: ${props => props.percent}%;
+  width: ${(props: { percent: any }) => props.percent}%;
+  height: ${(props: { percent: any }) => props.percent}%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,9 +22,9 @@ const Wrapper = styled.div`
 
     &::cue {
       background-color: transparent;
-      font-size: ${props => props.size};
-      line-height: ${props => props.height};
-      color: ${props => props.color};
+      font-size: ${(props: { size: any }) => props.size};
+      line-height: ${(props: { height: any }) => props.height};
+      color: ${(props: { color: any }) => props.color};
     }
   }
 `;
