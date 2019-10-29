@@ -19,7 +19,7 @@ const reactComponent: React.FC<{}> = props => {
   const { webscreen, light } = state;
   const { children } = props;
 
-  const playerRef = useRef(undefined);
+  const playerRef: React.RefObject<T> = useRef(undefined);
 
   const preventDefault = (e: React.MouseEvent) => {
     e.preventDefault();
