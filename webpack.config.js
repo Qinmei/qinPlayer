@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const autoprefixer = require('autoprefixer');
+
 const htmlWebpackPlugin = new HtmlWebpackPlugin({
   template: path.join(__dirname, 'examples/index.html'),
   filename: './index.html',
@@ -10,7 +12,7 @@ module.exports = {
     rules: [
       {
         test: /\.(ts|tsx)$/,
-        use: 'babel-loader',
+        use: ['babel-loader'],
         exclude: /node_modules/,
       },
       {
@@ -27,12 +29,12 @@ module.exports = {
               },
             },
           },
-          // {
-          //   loader: 'postcss-loader',
-          //   options: {
-          //     plugins: [require('autoprefix')],
-          //   },
-          // },
+          {
+            loader: 'postcss-loader',
+            options: {
+              plugins: [autoprefixer],
+            },
+          },
           'less-loader',
         ],
       },

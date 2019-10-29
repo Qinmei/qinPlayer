@@ -68,16 +68,15 @@ const Wrapper = styled.div`
           width: 100%;
           position: relative;
 
-          &:after {
+          &::after {
             content: '';
             position: absolute;
-            right: 1px;
+            right: -4px;
             top: 0px;
             width: 10px;
             height: 10px;
             border-radius: 50%;
             background-color: inherit;
-            transform: translate(50%, -50%);
           }
         }
       }

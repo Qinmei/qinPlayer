@@ -162,6 +162,10 @@ const Wrapper = styled.div`
               height: 14px;
               margin-right: 6px;
               fill: currentColor;
+
+              &.disable {
+                opacity: 0.6;
+              }
             }
           }
         }
@@ -183,6 +187,13 @@ const reactComponent: React.FC<{}> = props => {
   const data = useContext(PlayerContext);
   const { methods, state } = data;
   const { color } = state;
+
+  const pipToggle = () => {
+    if (!document.pictureInPictureEnabled) return;
+    methods.changePicture();
+  };
+
+  const supportPip = document.pictureInPictureEnabled;
 
   return (
     <Wrapper color={color}>
@@ -259,13 +270,13 @@ const reactComponent: React.FC<{}> = props => {
               </div>
               <div
                 className="checkLabel"
-                style={state.picture ? { color: state.color } : {}}
-                onClick={() => methods.changePicture()}
+                style={state.picture ? { color: state.color } : { opacity: supportPip ? 1 : 0.5 }}
+                onClick={pipToggle}
               >
                 {!state.picture ? (
                   <Icon type="nocheck" className="check"></Icon>
                 ) : (
-                  <Icon type="checked" className="check"></Icon>
+                  <Icon type="checked" className={'check'}></Icon>
                 )}
                 {lang[state.lang].picture}
               </div>

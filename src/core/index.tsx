@@ -121,7 +121,9 @@ const reactComponent: React.FC<PropsType> = props => {
     if (picture) {
       videoRef.current.requestPictureInPicture();
     } else {
-      document.exitPictureInPicture();
+      if (document.pictureInPictureElement) {
+        document.exitPictureInPicture();
+      }
     }
   }, [picture]);
 
