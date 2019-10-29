@@ -42,12 +42,22 @@ const Wrapper = styled.div`
   }
 `;
 
-const reactComponent: React.FC<{}> = props => {
+interface PropsType {
+  onChange?: () => void;
+}
+
+const reactComponent: React.FC<PropsType> = props => {
   const data = useContext(PlayerContext);
   const { methods, state } = data;
+  const { onChange } = props;
+
+  const fullToogle = () => {
+    methods.changeScreen();
+    onChange && onChange();
+  };
 
   return (
-    <Wrapper onClick={() => methods.changeScreen()}>
+    <Wrapper onClick={fullToogle}>
       <Icon type="fullscreen" className="iconfont"></Icon>
       <div className="tips">{lang[state.lang]['fullscreen']}</div>
     </Wrapper>

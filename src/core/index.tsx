@@ -1,39 +1,13 @@
 import React, { useEffect, useRef, useContext } from 'react';
 import { PlayerContext } from '../model';
 import styled from 'styled-components';
-import { enterFullscreen, exitFullscreen } from './compatibility';
 
 const Wrapper = styled.div`
-  position: relative;
-  width: 100%;
-  height: auto;
+  width: ${props => props.percent}%;
+  height: ${props => props.percent}%;
   display: flex;
   justify-content: center;
   align-items: center;
-
-  &.webscreen {
-    position: fixed;
-    z-index: 100000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: black;
-  }
-
-  &.nolight {
-    z-index: 100000;
-    &:after {
-      content: '';
-      position: fixed;
-      z-index: -1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.95);
-    }
-  }
 
   .video {
     width: 100%;
@@ -60,8 +34,6 @@ interface PropsType {
 }
 
 const reactComponent: React.FC<PropsType> = props => {
-  const { children } = props;
-  const playerRef: any = useRef(null);
   const videoRef: any = useRef(null);
 
   const data = useContext(PlayerContext);
@@ -74,17 +46,15 @@ const reactComponent: React.FC<PropsType> = props => {
       subtitle,
       play,
       volume,
-      fullscreen,
       seeked,
       picture,
       rate,
       loop,
+      size,
       subshow,
       subcolor,
       subsize,
       submargin,
-      webscreen,
-      light,
     },
     methods,
   } = data;
@@ -114,11 +84,9 @@ const reactComponent: React.FC<PropsType> = props => {
       methods.changeBuffered(buffer);
     },
     onWaiting: () => {
-      console.log('loadingstart');
       methods.changeLoading(true);
     },
     onCanPlay: () => {
-      console.log('loadingstart');
       methods.changeLoading(false);
     },
   };
@@ -147,17 +115,7 @@ const reactComponent: React.FC<PropsType> = props => {
     videoRef.current.playbackRate = rate;
   }, [rate]);
 
-  // 全屏
-  useEffect(() => {
-    if (fullscreen) {
-      enterFullscreen(playerRef.current);
-    } else {
-      exitFullscreen();
-    }
-  }, [fullscreen]);
-
   // 画中画
-
   useEffect(() => {
     if (!document.pictureInPictureEnabled) return;
     if (picture) {
@@ -168,15 +126,9 @@ const reactComponent: React.FC<PropsType> = props => {
   }, [picture]);
 
   return (
-    <Wrapper
-      ref={playerRef}
-      color={subcolor}
-      size={subsize}
-      height={submargin}
-      className={(webscreen ? 'webscreen' : '') + (light ? ' nolight' : '')}
-    >
+    <Wrapper color={subcolor} size={subsize} height={submargin} percent={size}>
       <video
-        crossOrigin="anonymous"
+        // crossOrigin="anonymous"
         className="video"
         src={source}
         poster={poster}
@@ -213,7 +165,6 @@ const reactComponent: React.FC<PropsType> = props => {
       >
         {subshow && <track kind="subtitles" default src={subtitle}></track>}
       </video>
-      {children}
     </Wrapper>
   );
 };

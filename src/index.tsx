@@ -18,9 +18,9 @@ const reactComponent: React.FC<PropsType> = props => {
 
   return (
     <PlayerProvider onStateChange={onStateChange} initData={args}>
-      <Core>
-        <WebTheme />
-      </Core>
+      <WebTheme>
+        <Core></Core>
+      </WebTheme>
     </PlayerProvider>
   );
 };

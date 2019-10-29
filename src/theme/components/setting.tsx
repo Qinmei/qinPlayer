@@ -177,6 +177,7 @@ const Wrapper = styled.div`
 `;
 
 const rateArr = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
+const sizeArr = [50, 60, 70, 80, 90, 100];
 
 const reactComponent: React.FC<{}> = props => {
   const data = useContext(PlayerContext);
@@ -215,12 +216,26 @@ const reactComponent: React.FC<{}> = props => {
             <p>{lang[state.lang].playRate}</p>
             <div className="labelCon">
               {rateArr.map((item: number) => (
-                <div className="secLabel" onClick={() => methods.changeRate(item)}>
+                <div className="secLabel" onClick={() => methods.changeRate(item)} key={item}>
                   <span className="rate">
                     {[0.75, 1.25].includes(item) ? item : item.toFixed(1)}
                   </span>
                   <span className="ratedot"></span>
                   {state.rate === item && (
+                    <span className="rateSelect" style={{ backgroundColor: state.color }}></span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="secList">
+            <p>{lang[state.lang].sizePercent}</p>
+            <div className="labelCon">
+              {sizeArr.map((item: number) => (
+                <div className="secLabel" onClick={() => methods.changeSize(item)} key={item}>
+                  <span className="rate">{(item / 100).toFixed(1)}</span>
+                  <span className="ratedot"></span>
+                  {state.size === item && (
                     <span className="rateSelect" style={{ backgroundColor: state.color }}></span>
                   )}
                 </div>

@@ -29,6 +29,7 @@ const lang: any = {
     submargin3: '正常',
     submargin4: '高',
     submargin5: '超高',
+    sizePercent: '画面比例',
   },
   EN: {},
 };

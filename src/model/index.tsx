@@ -24,7 +24,7 @@ interface DataType {
     urls: Array<string>;
   };
   subtitle: string;
-
+  size: number;
   play: boolean;
   loading: boolean;
   duration: number;
@@ -66,6 +66,7 @@ interface MethodsProps {
   changeSubColor: (value?: string) => void;
   changeSubSize: (value?: string) => void;
   changeSubMargin: (value?: string) => void;
+  changeSize: (value?: number) => void;
 }
 
 const contextValue: ContextProps = {};
@@ -90,10 +91,11 @@ const PlayerProvider = (props: PropsType) => {
     play: false,
     loading: false,
     buffered: [[0, 0]],
-    duration: 175,
+    duration: 0.0001,
     current: 0,
     seeked: 0,
     volume: 0.75,
+    size: 100,
     fullscreen: false,
     webscreen: false,
     picture: false,
@@ -121,7 +123,6 @@ const PlayerProvider = (props: PropsType) => {
       [type]: value,
     });
     onStateChange(type, value, state);
-    console.log(type, value);
   };
 
   // 导出方法给控制栏调用, 改变model的数据状态, 同时回调函数将结果上传
@@ -145,6 +146,7 @@ const PlayerProvider = (props: PropsType) => {
     changeSubColor: (value: string = state.subcolor) => sendData('subcolor', value),
     changeSubSize: (value: string = state.subsize) => sendData('subsize', value),
     changeSubMargin: (value: string = state.submargin) => sendData('submargin', value),
+    changeSize: (value: number = state.size) => sendData('size', value),
   };
 
   const contextValue: ContextProps = {
