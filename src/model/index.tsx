@@ -1,7 +1,7 @@
 import React, { createContext, useReducer } from 'react';
 
 interface PropsType {
-  onStateChange: (type: string, value: any, state: any) => void;
+  onStateChange?: (type: string, value: any, state: any) => void;
   initData: any;
   children?: React.ReactNode;
 }
@@ -122,7 +122,7 @@ const PlayerProvider = (props: PropsType) => {
     dispatch({
       [type]: value,
     });
-    onStateChange(type, value, state);
+    onStateChange && onStateChange(type, value, state);
   };
 
   // 导出方法给控制栏调用, 改变model的数据状态, 同时回调函数将结果上传

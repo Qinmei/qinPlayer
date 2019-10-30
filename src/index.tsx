@@ -10,11 +10,11 @@ interface PropsType {
   autoplay?: boolean;
   color?: string;
   subtitle?: string;
-  onStateChange?: (type: string, value: any) => void;
+  onStateChange?: (type: string, value: any, state: any) => void;
 }
 
 const reactComponent: React.FC<PropsType> = props => {
-  const { onStateChange = (type: string, value: any, state: any) => {}, ...args } = props;
+  const { onStateChange, ...args } = props;
 
   return (
     <PlayerProvider onStateChange={onStateChange} initData={args}>

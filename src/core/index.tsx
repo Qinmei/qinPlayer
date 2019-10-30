@@ -29,9 +29,7 @@ const Wrapper = styled.div`
   }
 `;
 
-interface PropsType {
-  children: any;
-}
+interface PropsType {}
 
 const reactComponent: React.FC<PropsType> = props => {
   const videoRef: any = useRef(null);
