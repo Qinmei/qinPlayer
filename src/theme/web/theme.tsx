@@ -3,6 +3,7 @@ import screenfull from 'screenfull';
 import styles from './style.less';
 import { PlayerContext } from '../../model';
 import Subtitle from '../components/subtitle';
+import Danmu from '../components/danmu';
 import Volume from '../components/volume';
 import Setting from '../components/setting';
 import WebScreen from '../components/webscreen';

@@ -210,7 +210,7 @@ const reactComponent: React.FC<{}> = props => {
         style={{ opacity: state.subshow ? 1 : 0.6 }}
         onClick={() => methods.changeSubShow()}
       >
-        <Icon type="subtitle" className="iconfont"></Icon>
+        <Icon type="danmu" className="iconfont"></Icon>
       </div>
       <div className="panel" style={{ right: '-100px' }}>
         <div className="container">

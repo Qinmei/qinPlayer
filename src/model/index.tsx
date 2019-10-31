@@ -123,6 +123,7 @@ const PlayerProvider = (props: PropsType) => {
       [type]: value,
     });
     onStateChange && onStateChange(type, value, state);
+    console.log(type, value);
   };
 
   // 导出方法给控制栏调用, 改变model的数据状态, 同时回调函数将结果上传
