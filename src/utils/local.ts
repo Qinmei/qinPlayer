@@ -30,6 +30,8 @@ const lang: any = {
     submargin4: '高',
     submargin5: '超高',
     sizePercent: '画面比例',
+    forward: '+15s',
+    backward: '-15s',
   },
   EN: {},
 };

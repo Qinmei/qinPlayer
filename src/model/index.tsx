@@ -85,7 +85,7 @@ const PlayerProvider = (props: PropsType) => {
   const data: DataType = {
     source: '',
     poster: '',
-    preload: 'metadata',
+    preload: 'auto',
     autoplay: false,
     color: '#00a1d6',
     play: false,
@@ -132,9 +132,12 @@ const PlayerProvider = (props: PropsType) => {
     changeScreen: (value: boolean = !state.fullscreen) => sendData('fullscreen', value),
     changeWebScreen: (value: boolean = !state.webscreen) => sendData('webscreen', value),
     changeMovie: (value: boolean = !state.movie) => sendData('movie', value),
-    changeVolume: (value: number = 0.75) => sendData('volume', value),
-    changeCurrent: (value: number = state.current) => sendData('current', value),
-    changeSeeked: (value: number = state.seeked) => sendData('seeked', value),
+    changeVolume: (value: number = 0.75) =>
+      sendData('volume', value > 1 ? 1 : value < 0 ? 0 : value),
+    changeCurrent: (value: number = state.current) =>
+      sendData('current', value < 0 ? 0 : value > state.duration ? state.duration : value),
+    changeSeeked: (value: number = state.seeked) =>
+      sendData('seeked', value < 0 ? 0 : value > state.duration ? state.duration : value),
     changeBuffered: (value: Array<Array<number>>) => sendData('buffered', value),
     changeDuration: (value: number = 0) => sendData('duration', value),
     changeLoading: (value: boolean = !state.loading) => sendData('loading', value),

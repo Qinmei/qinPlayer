@@ -13,6 +13,7 @@ import Duration from '../components/duration';
 import Message from '../components/message';
 import Loading from '../components/loading';
 import Progress from '../components/progress';
+import Information from '../components/information';
 
 const reactComponent: React.FC<{}> = props => {
   const data = useContext(PlayerContext);
@@ -21,6 +22,7 @@ const reactComponent: React.FC<{}> = props => {
   const { children } = props;
 
   const playerRef: React.RefObject<T> = useRef(undefined);
+  const infoRef: React.RefObject<T> = useRef(undefined);
 
   const preventDefault = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -37,14 +39,43 @@ const reactComponent: React.FC<{}> = props => {
     }
   };
 
+  const onKeyPress = (e: React.KeyboardEvent) => {
+    switch (e.keyCode) {
+      case 32: // space
+        methods.changePlay();
+        break;
+      case 37: // left
+        methods.changeSeeked(state.current - 15);
+        infoRef.current.init('backward');
+        break;
+      case 38: // up
+        methods.changeVolume(state.volume + 0.05);
+        infoRef.current.init('volume');
+        break;
+      case 39: // right
+        methods.changeSeeked(state.current + 15);
+        infoRef.current.init('forward');
+        break;
+      case 40: // down
+        methods.changeVolume(state.volume - 0.05);
+        infoRef.current.init('volume');
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div
       ref={playerRef}
       className={`${styles.qinplayer} ${webscreen && styles.webscreen} ${light && styles.nolight}`}
+      tabIndex={-1}
+      onKeyDown={onKeyPress}
     >
       <div className={styles.control} onClick={togglePlay}>
         <Message></Message>
         <Loading></Loading>
+        <Information ref={infoRef}></Information>
         <div
           className={`${styles.bar} ${state.play ? styles.play : styles.pause}`}
           onClick={preventDefault}

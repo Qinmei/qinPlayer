@@ -13,20 +13,11 @@ const Wrapper = styled.div`
   cursor: pointer;
   position: relative;
 
-  .icon {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-
-    .iconfont {
-      width: 25px;
-      height: 20px;
-      color: white;
-      fill: currentColor;
-    }
+  .iconfont {
+    width: 25px;
+    height: 20px;
+    color: white;
+    fill: currentColor;
   }
 
   .panel {
@@ -205,13 +196,7 @@ const reactComponent: React.FC<{}> = props => {
 
   return (
     <Wrapper color={color}>
-      <div
-        className="icon"
-        style={{ opacity: state.subshow ? 1 : 0.6 }}
-        onClick={() => methods.changeSubShow()}
-      >
-        <Icon type="subtitle" className="iconfont"></Icon>
-      </div>
+      <Icon type="subtitle" className="iconfont"></Icon>
       <div className="panel" style={{ right: '-100px' }}>
         <div className="container">
           <div className="secList">
