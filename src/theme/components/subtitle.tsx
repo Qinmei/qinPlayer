@@ -3,6 +3,7 @@ import Icon from './icon';
 import { PlayerContext } from '../../model';
 import lang from '../../utils/local';
 import styled from 'styled-components';
+import { colorArr } from '../../utils/utils';
 
 const Wrapper = styled.div`
   width: 35px;
@@ -160,6 +161,8 @@ const Wrapper = styled.div`
             .selectIcon {
               width: 14px;
               height: 14px;
+              color: white;
+              fill: currentColor;
             }
           }
         }
@@ -174,20 +177,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const colorArr = [
-  'white',
-  '#ff0000',
-  '#ff7d00',
-  '#ffff00',
-  '#00ff00',
-  '#0000ff',
-  '#00ffff',
-  '#ff00ff',
-];
-
-const sizeArr = ['12px', '34px', '36px', '48px', '60px'];
-
-const marginArr = ['30px', '60px', '100px', '140px', '180px'];
+const sizeArr = [0, 1, 2, 3, 4];
 
 const reactComponent: React.FC<{}> = props => {
   const data = useContext(PlayerContext);
@@ -221,7 +211,7 @@ const reactComponent: React.FC<{}> = props => {
           <div className="secList">
             <p>{lang[state.lang].subsize}</p>
             <div className="labelCon">
-              {sizeArr.map((item: string, index: number) => (
+              {sizeArr.map((item: number, index: number) => (
                 <div className="secLabel" onClick={() => methods.changeSubSize(item)} key={item}>
                   <span className="rate">{lang[state.lang]['subsize' + (index + 1)]}</span>
                   <span className="ratedot"></span>
@@ -235,7 +225,7 @@ const reactComponent: React.FC<{}> = props => {
           <div className="secList">
             <p>{lang[state.lang].submargin}</p>
             <div className="labelCon">
-              {marginArr.map((item: string, index: number) => (
+              {sizeArr.map((item: number, index: number) => (
                 <div className="secLabel" onClick={() => methods.changeSubMargin(item)} key={item}>
                   <span className="rate">{lang[state.lang]['submargin' + (index + 1)]}</span>
                   <span className="ratedot"></span>
@@ -249,16 +239,14 @@ const reactComponent: React.FC<{}> = props => {
           <div className="secList" style={{ marginBottom: 0 }}>
             <p>{lang[state.lang].subcolor}</p>
             <div className="labelCon" style={{ marginTop: '8px' }}>
-              {colorArr.map((item: string) => (
+              {colorArr.map((item: string, index: number) => (
                 <div
                   className="colorLabel"
-                  onClick={() => methods.changeSubColor(item)}
+                  onClick={() => methods.changeSubColor(index)}
                   key={item}
                   style={{ backgroundColor: item }}
                 >
-                  {state.subcolor === item && (
-                    <Icon type="select" color="transparent" className="selectIcon"></Icon>
-                  )}
+                  {state.subcolor === index && <Icon type="select" className="selectIcon"></Icon>}
                 </div>
               ))}
             </div>

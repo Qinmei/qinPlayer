@@ -1,11 +1,10 @@
 import React, { useEffect, useRef, useState, useContext } from 'react';
 import { PlayerContext } from '../../model';
 import styled from 'styled-components';
-import { timeTransfer } from '../../utils/utils';
 
 interface PropsType {
   currentTime: number;
-  progressRef: React.Ref;
+  progressRef: React.RefObject<T>;
 }
 
 const Wrapper = styled.div`

@@ -20,3 +20,24 @@ export const getStyleName = (styles: any, type: string, prefix: any) => {
   console.log(total);
   return styles[total];
 };
+
+export const colorArr: Array<string> = [
+  'black',
+  '#ff0000',
+  '#ff7d00',
+  '#ffff00',
+  '#00ff00',
+  '#0000ff',
+  '#00ffff',
+  '#ff00ff',
+];
+
+export const marginArr: any = {
+  web: ['40px', '50px', '60px', '70px', '80px'],
+  h5: [],
+};
+
+export const sizeArr: any = {
+  web: ['25px', '30px', '35px', '40px', '45px'],
+  h5: [],
+};

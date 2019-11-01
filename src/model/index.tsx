@@ -16,6 +16,7 @@ interface DataType {
   source: string;
   poster: string;
   preload: 'auto' | 'metadata' | 'none';
+  mode: 'auto' | 'web' | 'h5';
   autoplay: boolean;
   color: string;
   lang: string;
@@ -41,14 +42,15 @@ interface DataType {
   rate: number;
   loop: boolean;
   subshow: boolean;
-  subsize: string;
-  subcolor: string;
-  submargin: string;
+  subsize: number;
+  subcolor: number;
+  submargin: number;
 }
 
 interface MethodsProps {
   changePlay: (value?: boolean) => void;
   changeScreen: (value?: boolean) => void;
+  changeMode: (value?: string) => void;
   changeWebScreen: (value?: boolean) => void;
   changeMovie: (value?: boolean) => void;
   changeVolume: (value?: number) => void;
@@ -63,9 +65,9 @@ interface MethodsProps {
   changeLoop: (value?: boolean) => void;
   changeRate: (value?: number) => void;
   changeSubShow: (value?: boolean) => void;
-  changeSubColor: (value?: string) => void;
-  changeSubSize: (value?: string) => void;
-  changeSubMargin: (value?: string) => void;
+  changeSubColor: (value?: number) => void;
+  changeSubSize: (value?: number) => void;
+  changeSubMargin: (value?: number) => void;
   changeSize: (value?: number) => void;
 }
 
@@ -86,6 +88,7 @@ const PlayerProvider = (props: PropsType) => {
     source: '',
     poster: '',
     preload: 'auto',
+    mode: 'web',
     autoplay: false,
     color: '#00a1d6',
     play: false,
@@ -104,10 +107,10 @@ const PlayerProvider = (props: PropsType) => {
     rate: 1,
     loop: false,
     subtitle: '',
-    subshow: false,
-    subsize: '36px',
-    subcolor: 'white',
-    submargin: '100px',
+    subshow: true,
+    subsize: 2,
+    subcolor: 0,
+    submargin: 2,
     message: '',
     lang: 'CN',
     thumbnail: {
@@ -129,6 +132,7 @@ const PlayerProvider = (props: PropsType) => {
   // 导出方法给控制栏调用, 改变model的数据状态, 同时回调函数将结果上传
   const methods: MethodsProps = {
     changePlay: (value: boolean = !state.play) => sendData('play', value),
+    changeMode: (value: string = 'auto') => sendData('mode', value),
     changeScreen: (value: boolean = !state.fullscreen) => sendData('fullscreen', value),
     changeWebScreen: (value: boolean = !state.webscreen) => sendData('webscreen', value),
     changeMovie: (value: boolean = !state.movie) => sendData('movie', value),
@@ -147,9 +151,9 @@ const PlayerProvider = (props: PropsType) => {
     changeLoop: (value: boolean = !state.loop) => sendData('loop', value),
     changeRate: (value: number = 1) => sendData('rate', value),
     changeSubShow: (value: boolean = !state.subshow) => sendData('subshow', value),
-    changeSubColor: (value: string = state.subcolor) => sendData('subcolor', value),
-    changeSubSize: (value: string = state.subsize) => sendData('subsize', value),
-    changeSubMargin: (value: string = state.submargin) => sendData('submargin', value),
+    changeSubColor: (value: number = state.subcolor) => sendData('subcolor', value),
+    changeSubSize: (value: number = state.subsize) => sendData('subsize', value),
+    changeSubMargin: (value: number = state.submargin) => sendData('submargin', value),
     changeSize: (value: number = state.size) => sendData('size', value),
   };
 

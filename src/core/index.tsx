@@ -19,13 +19,6 @@ const Wrapper = styled.div`
     &::-webkit-media-controls {
       display: none !important;
     }
-
-    &::cue {
-      background-color: transparent;
-      font-size: ${(props: { size: any }) => props.size};
-      line-height: ${(props: { height: any }) => props.height};
-      color: ${(props: { color: any }) => props.color};
-    }
   }
 `;
 
@@ -36,24 +29,7 @@ const reactComponent: React.FC<PropsType> = props => {
 
   const data = useContext(PlayerContext);
   const {
-    state: {
-      source,
-      poster,
-      preload,
-      autoplay,
-      subtitle,
-      play,
-      volume,
-      seeked,
-      picture,
-      rate,
-      loop,
-      size,
-      subshow,
-      subcolor,
-      subsize,
-      submargin,
-    },
+    state: { source, poster, preload, autoplay, play, volume, seeked, picture, rate, loop, size },
     methods,
   } = data;
 
@@ -126,9 +102,8 @@ const reactComponent: React.FC<PropsType> = props => {
   }, [picture]);
 
   return (
-    <Wrapper color={subcolor} size={subsize} height={submargin} percent={size}>
+    <Wrapper percent={size}>
       <video
-        // crossOrigin="anonymous"
         className="video"
         src={source}
         poster={poster}
@@ -162,9 +137,7 @@ const reactComponent: React.FC<PropsType> = props => {
         onSuspend={() => {}}
         onVolumeChange={() => {}}
         ref={videoRef}
-      >
-        {subshow && <track kind="subtitles" default src={subtitle}></track>}
-      </video>
+      ></video>
     </Wrapper>
   );
 };

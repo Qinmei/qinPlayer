@@ -1,5 +1,6 @@
 import React from 'react';
 import Core from './core';
+import Sub from './subtitle';
 import WebTheme from './theme/web/theme';
 import { PlayerProvider } from './model';
 
@@ -19,6 +20,7 @@ const reactComponent: React.FC<PropsType> = props => {
   return (
     <PlayerProvider onStateChange={onStateChange} initData={args}>
       <WebTheme>
+        <Sub></Sub>
         <Core></Core>
       </WebTheme>
     </PlayerProvider>

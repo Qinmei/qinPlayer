@@ -5,7 +5,7 @@ const App = () => (
   <Player
     source="https://zhstatic.zhihu.com/cfe/griffith/zhihu2018_hd.mp4"
     poster="https://qinvideo.org/video.jpg"
-    subtitle="http://video.qinvideo.org/sub.vtt"
+    subtitle="https://qinvideo.org/sub.vtt"
     onStateChange={(type: string, value: any, state: any) => {}}
   />
 );

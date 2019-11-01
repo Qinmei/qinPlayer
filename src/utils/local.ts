@@ -22,7 +22,7 @@ const lang: any = {
     subsize3: '正常',
     subsize4: '大',
     subsize5: '超大',
-    subcolor: '字幕颜色',
+    subcolor: '描边颜色',
     submargin: '字幕高度',
     submargin1: '极低',
     submargin2: '低',
