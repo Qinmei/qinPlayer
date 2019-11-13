@@ -3,6 +3,7 @@ import Core from './core';
 import Sub from './subtitle';
 import WebTheme from './theme/web/theme';
 import { PlayerProvider } from './model';
+import '@babel/polyfill';
 
 interface PropsType {
   source: string;

@@ -33,7 +33,7 @@ export const colorArr: Array<string> = [
 ];
 
 export const marginArr: any = {
-  web: ['40px', '50px', '60px', '70px', '80px'],
+  web: ['20px', '35px', '50px', '65px', '80px'],
   h5: [],
 };
 
