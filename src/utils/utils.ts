@@ -41,3 +41,13 @@ export const sizeArr: any = {
   web: ['25px', '30px', '35px', '40px', '45px'],
   h5: [],
 };
+
+export const areaArr: any = {
+  web: ['0.25', '0.5', '0.67', '0.75', '1'],
+  h5: [],
+};
+
+export const fontArr: any = {
+  web: [14, 16, 18, 20, 22],
+  h5: [],
+};

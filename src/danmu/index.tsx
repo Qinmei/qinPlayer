@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useContext, useState } from 'react';
+import React, { useEffect, useRef, useContext, useState, useLayoutEffect } from 'react';
 import { PlayerContext } from '../model';
 import styled from 'styled-components';
-import { colorArr, marginArr, sizeArr } from '../utils/utils';
+import { fontArr } from '../utils/utils';
 import fetch from '../utils/request';
 
 const Wrapper = styled.div`
@@ -11,11 +11,16 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   z-index: 7;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: flex-end;
   overflow: hidden;
+
+  .danmu {
+    width: 100%;
+    color: white;
+    font-size: ${(props: { size: number; mode: string }) => fontArr[props.mode][props.size]}px;
+    line-height: ${(props: { size: number; mode: string }) =>
+      fontArr[props.mode][props.size] + 4}px;
+    margin: 0;
+  }
 `;
 
 interface PropsType {}
@@ -23,13 +28,17 @@ interface PropsType {}
 const reactComponent: React.FC<PropsType> = props => {
   const data = useContext(PlayerContext);
   const {
-    state: { danmu, current },
+    state: { danmu, current, danmuArea, danmuFont, danmuShow, mode },
   } = data;
 
-  if (!danmu) return <></>;
+  if (!danmuShow) return <></>;
+
+  const danmuRef: React.RefObject<T> = useRef(null);
 
   const [danmuData, setDanmuData] = useState<Array<any>>([]);
   const [show, setShow] = useState<Array<any>>([]);
+  const [width, setWidth] = useState<number>(0);
+  const [height, setHeight] = useState<number>(0);
 
   const initData = async (target: string) => {
     const data = await fetch(target).then(res => res.json());
@@ -42,6 +51,8 @@ const reactComponent: React.FC<PropsType> = props => {
     setShow(show);
   };
 
+  const draw = (list: Array<string>) => {};
+
   useEffect(() => {
     initData(danmu);
   }, [danmu]);
@@ -50,13 +61,21 @@ const reactComponent: React.FC<PropsType> = props => {
     filterData(danmuData);
   }, [current]);
 
+  useEffect(() => {
+    draw(show);
+  }, [show]);
+
+  useEffect(() => {}, []);
+
+  useLayoutEffect(() => {
+    setWidth(danmuRef.current.clientWidth);
+    setHeight(danmuRef.current.clientHeight);
+  });
+
   return (
-    <Wrapper>
-      <div className="danmu">
-        {show.map((text: string, index: number) => (
-          <p key={text + index}>{text}</p>
-        ))}
-      </div>
+    <Wrapper ref={danmuRef} size={danmuFont} mode={mode}>
+      <div className="danmu">东邪西毒</div>
+      <div className="danmu">东邪西毒</div>
     </Wrapper>
   );
 };
