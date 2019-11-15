@@ -13,20 +13,11 @@ const Wrapper = styled.div`
   cursor: pointer;
   position: relative;
 
-  .icon {
-    height: 100%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-
-    .iconfont {
-      width: 25px;
-      height: 20px;
-      color: white;
-      fill: currentColor;
-    }
+  .iconfont {
+    width: 25px;
+    height: 20px;
+    color: white;
+    fill: currentColor;
   }
 
   .panel {
@@ -169,6 +160,8 @@ const Wrapper = styled.div`
             .selectIcon {
               width: 14px;
               height: 14px;
+              color: white;
+              fill: currentColor;
             }
           }
         }
@@ -183,20 +176,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const colorArr = [
-  'white',
-  '#ff0000',
-  '#ff7d00',
-  '#ffff00',
-  '#00ff00',
-  '#0000ff',
-  '#00ffff',
-  '#ff00ff',
-];
-
-const sizeArr = ['12px', '34px', '36px', '48px', '60px'];
-
-const marginArr = ['30px', '60px', '100px', '140px', '180px'];
+const sizeArr = [0, 1, 2, 3, 4];
 
 const reactComponent: React.FC<{}> = props => {
   const data = useContext(PlayerContext);
@@ -205,42 +185,36 @@ const reactComponent: React.FC<{}> = props => {
 
   return (
     <Wrapper color={color}>
-      <div
-        className="icon"
-        style={{ opacity: state.subshow ? 1 : 0.6 }}
-        onClick={() => methods.changeSubShow()}
-      >
-        <Icon type="danmu" className="iconfont"></Icon>
-      </div>
+      <Icon type="danmu" className="iconfont"></Icon>
       <div className="panel" style={{ right: '-100px' }}>
         <div className="container">
           <div className="secList">
-            <p>{lang[state.lang].showSubtitle}</p>
+            <p>{lang[state.lang].danmuSetting}</p>
             <div className="labelCon">
               <div
                 className="labelList"
-                style={state.subshow ? { backgroundColor: color } : {}}
-                onClick={() => methods.changeSubShow(true)}
+                style={state.danmuShow ? { backgroundColor: color } : {}}
+                onClick={() => methods.changeDanmuShow(true)}
               >
-                {lang[state.lang].subtitle}
+                {lang[state.lang].danmu}
               </div>
               <div
                 className="labelList"
-                style={!state.subshow ? { backgroundColor: color } : {}}
-                onClick={() => methods.changeSubShow(false)}
+                style={!state.danmuShow ? { backgroundColor: color } : {}}
+                onClick={() => methods.changeDanmuShow(false)}
               >
-                {lang[state.lang].nosubtitle}
+                {lang[state.lang].nodanmu}
               </div>
             </div>
           </div>
           <div className="secList">
-            <p>{lang[state.lang].subsize}</p>
+            <p>{lang[state.lang].danmuFont}</p>
             <div className="labelCon">
-              {sizeArr.map((item: string, index: number) => (
-                <div className="secLabel" onClick={() => methods.changeSubSize(item)} key={item}>
-                  <span className="rate">{lang[state.lang]['subsize' + (index + 1)]}</span>
+              {sizeArr.map((item: number, index: number) => (
+                <div className="secLabel" onClick={() => methods.changeDanmuFont(item)} key={item}>
+                  <span className="rate">{lang[state.lang]['danmuFont' + (index + 1)]}</span>
                   <span className="ratedot"></span>
-                  {state.subsize === item && (
+                  {state.danmuFont === item && (
                     <span className="rateSelect" style={{ backgroundColor: color }}></span>
                   )}
                 </div>
@@ -248,31 +222,32 @@ const reactComponent: React.FC<{}> = props => {
             </div>
           </div>
           <div className="secList">
-            <p>{lang[state.lang].submargin}</p>
+            <p>{lang[state.lang].danmuOpacity}</p>
             <div className="labelCon">
-              {marginArr.map((item: string, index: number) => (
-                <div className="secLabel" onClick={() => methods.changeSubMargin(item)} key={item}>
-                  <span className="rate">{lang[state.lang]['submargin' + (index + 1)]}</span>
-                  <span className="ratedot"></span>
-                  {state.submargin === item && (
-                    <span className="rateSelect" style={{ backgroundColor: color }}></span>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="secList" style={{ marginBottom: 0 }}>
-            <p>{lang[state.lang].subcolor}</p>
-            <div className="labelCon" style={{ marginTop: '8px' }}>
-              {colorArr.map((item: string) => (
+              {sizeArr.map((item: number, index: number) => (
                 <div
-                  className="colorLabel"
-                  onClick={() => methods.changeSubColor(item)}
+                  className="secLabel"
+                  onClick={() => methods.changeDanmuOpacity(item)}
                   key={item}
-                  style={{ backgroundColor: item }}
                 >
-                  {state.subcolor === item && (
-                    <Icon type="select" color="transparent" className="selectIcon"></Icon>
+                  <span className="rate">{lang[state.lang]['danmuOpacity' + (index + 1)]}</span>
+                  <span className="ratedot"></span>
+                  {state.danmuOpacity === item && (
+                    <span className="rateSelect" style={{ backgroundColor: color }}></span>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="secList">
+            <p>{lang[state.lang].danmuArea}</p>
+            <div className="labelCon">
+              {sizeArr.map((item: number, index: number) => (
+                <div className="secLabel" onClick={() => methods.changeDanmuArea(item)} key={item}>
+                  <span className="rate">{lang[state.lang]['danmuArea' + (index + 1)]}</span>
+                  <span className="ratedot"></span>
+                  {state.danmuArea === item && (
+                    <span className="rateSelect" style={{ backgroundColor: color }}></span>
                   )}
                 </div>
               ))}

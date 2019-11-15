@@ -59,7 +59,7 @@ const reactComponent: React.FC<PropsType> = props => {
   const subArr = subData.filter(item => current >= item.start && current <= item.end);
   const sub = subArr.length > 0 ? subArr[0].word : [];
 
-  return subshow ? (
+  return (
     <Wrapper color={subcolor} size={subsize} margin={submargin} mode={mode}>
       <div className="sub">
         {sub.map((text: string, index: number) => (
@@ -67,8 +67,6 @@ const reactComponent: React.FC<PropsType> = props => {
         ))}
       </div>
     </Wrapper>
-  ) : (
-    <></>
   );
 };
 export default reactComponent;

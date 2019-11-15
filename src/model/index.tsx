@@ -45,6 +45,14 @@ interface DataType {
   subsize: number;
   subcolor: number;
   submargin: number;
+  danmu: string;
+  danmuShow: boolean;
+  noTop: boolean;
+  noBottom: boolean;
+  noScroll: boolean;
+  danmuOpacity: number;
+  danmuArea: number;
+  danmuFont: number;
 }
 
 interface MethodsProps {
@@ -69,6 +77,13 @@ interface MethodsProps {
   changeSubSize: (value?: number) => void;
   changeSubMargin: (value?: number) => void;
   changeSize: (value?: number) => void;
+  changeDanmuShow: (value: boolean) => void;
+  changeNoTop: (value: boolean) => void;
+  changeNoBottom: (value: boolean) => void;
+  changeNoScroll: (value: boolean) => void;
+  changeDanmuOpacity: (value: number) => void;
+  changeDanmuArea: (value: number) => void;
+  changeDanmuFont: (value: number) => void;
 }
 
 const contextValue: ContextProps = {};
@@ -111,6 +126,14 @@ const PlayerProvider = (props: PropsType) => {
     subsize: 2,
     subcolor: 0,
     submargin: 2,
+    danmu: '',
+    noTop: false,
+    noBottom: false,
+    noScroll: false,
+    danmuShow: true,
+    danmuOpacity: 4,
+    danmuArea: 2,
+    danmuFont: 2,
     message: '',
     lang: 'CN',
     thumbnail: {
@@ -155,6 +178,13 @@ const PlayerProvider = (props: PropsType) => {
     changeSubSize: (value: number = state.subsize) => sendData('subsize', value),
     changeSubMargin: (value: number = state.submargin) => sendData('submargin', value),
     changeSize: (value: number = state.size) => sendData('size', value),
+    changeDanmuShow: (value: boolean = !state.danmuShow) => sendData('danmuShow', value),
+    changeNoTop: (value: boolean = !state.noTop) => sendData('noTop', value),
+    changeNoBottom: (value: boolean = !state.noBottom) => sendData('noBottom', value),
+    changeNoScroll: (value: boolean = !state.noScroll) => sendData('noScroll', value),
+    changeDanmuOpacity: (value: number = state.danmuOpacity) => sendData('danmuOpacity', value),
+    changeDanmuArea: (value: number = state.danmuArea) => sendData('danmuArea', value),
+    changeDanmuFont: (value: number = state.danmuFont) => sendData('danmuFont', value),
   };
 
   const contextValue: ContextProps = {

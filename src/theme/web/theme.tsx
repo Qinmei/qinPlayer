@@ -90,6 +90,7 @@ const reactComponent: React.FC<{}> = props => {
               <div className={styles.right}>
                 <Volume></Volume>
                 {state.subtitle && <Subtitle></Subtitle>}
+                {state.danmu && <Danmu></Danmu>}
                 <Setting></Setting>
                 <WebScreen></WebScreen>
                 <FullScreen onChange={toggleFullscreen}></FullScreen>
