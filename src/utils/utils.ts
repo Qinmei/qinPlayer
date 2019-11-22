@@ -21,6 +21,15 @@ export const getStyleName = (styles: any, type: string, prefix: any) => {
   return styles[total];
 };
 
+export const getFontLength = (text: string) => {
+  const Alllength = text.length;
+  const TotalLength = text.replace(/[^\x00-\xff]/g, '01').length;
+  const CNlength = TotalLength - Alllength;
+  const ENlength = TotalLength - CNlength * 2;
+  const length = CNlength * 2 + (ENlength * 6) / 5;
+  return length;
+};
+
 export const colorArr: Array<string> = [
   'black',
   '#ff0000',
@@ -48,6 +57,11 @@ export const areaArr: any = {
 };
 
 export const fontArr: any = {
-  web: [14, 16, 18, 20, 22],
+  web: [12, 16, 18, 20, 24],
+  h5: [],
+};
+
+export const opacityArr: any = {
+  web: [0.2, 0.4, 0.6, 0.8, 1],
   h5: [],
 };
