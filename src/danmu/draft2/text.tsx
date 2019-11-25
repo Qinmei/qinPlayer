@@ -35,8 +35,11 @@ const reactComponent: React.FC<PropsType> = props => {
   const start = () => {
     left -= 2;
     setLeft(left);
+    console.log('start', new Date().getTime());
     textRef.current.play = requestAnimationFrame(start);
   };
+
+  console.log('render', new Date().getTime());
 
   const stop = () => {
     if (textRef.current.play) {

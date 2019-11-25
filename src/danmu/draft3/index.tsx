@@ -1,8 +1,7 @@
 /*
  * 方案三:最外层控制数组, 获取数据, 内层专注于渲染弹幕层;
- * 缺点: 动画效果卡顿, 每次更新后的渲染时间在200ms, 弹幕一顿一顿的;
- * 优点:使用简单, 可控制动画的暂停启动, 无需关注时间, 只需维护数组;
- * 反思:可能是组件依赖过多, 导致每次render时间过长, 下一步尝试将位移动画提成组件, 减少依赖, 提高动画流畅度
+ * 缺点: 动画效果卡顿;
+ * 反思:由于获取数组并持续的更新show, 最外层一直在渲染, 所以很可能不是动画的问题, 下一步需要优化外部的更新机制;
  */
 
 import React, { useEffect, useRef, useContext, useState, useLayoutEffect } from 'react';
@@ -10,6 +9,7 @@ import { PlayerContext } from '../../model';
 import styled from 'styled-components';
 import { fontArr, areaArr, opacityArr, getFontLength } from '../../utils/utils';
 import fetch from '../../utils/request';
+import Cover from './cover';
 
 interface props {
   mode: string;
@@ -158,20 +158,7 @@ const reactComponent: React.FC<PropsType> = props => {
       width={width}
       play={play}
     >
-      <div className="con">
-        {show.map(item => (
-          <div
-            className="danmu"
-            key={item._id}
-            style={{
-              transform: `translateX(${item.left}px)`,
-              top: item.top * (fontArr[mode][danmuFont] + 4),
-            }}
-          >
-            {item.text}
-          </div>
-        ))}
-      </div>
+      <Cover list={show} play={play} lineHeight={fontArr[mode][danmuFont] + 4} />
     </Wrapper>
   );
 };
