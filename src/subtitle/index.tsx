@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useContext, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import { PlayerContext } from '../model';
 import styled from 'styled-components';
 import { colorArr, marginArr, sizeArr } from '../utils/utils';
@@ -36,7 +36,7 @@ const Wrapper = styled.div`
 
 interface PropsType {}
 
-const reactComponent: React.FC<PropsType> = props => {
+const reactComponent: React.FC<PropsType> = (props) => {
   const data = useContext(PlayerContext);
   const {
     state: { subshow, subcolor, subsize, submargin, subtitle, mode, current },
@@ -47,7 +47,7 @@ const reactComponent: React.FC<PropsType> = props => {
   const [subData, setSubData] = useState<Array<any>>([]);
 
   const initData = async (url: string) => {
-    const data = await fetch(url).then(res => res.text());
+    const data = await fetch(url).then((res) => res.text());
     const result = data ? await vttToJson(data) : [];
     setSubData(result);
   };
@@ -56,7 +56,7 @@ const reactComponent: React.FC<PropsType> = props => {
     initData(subtitle);
   }, [subtitle]);
 
-  const subArr = subData.filter(item => current >= item.start && current <= item.end);
+  const subArr = subData.filter((item) => current >= item.start && current <= item.end);
   const sub = subArr.length > 0 ? subArr[0].word : [];
 
   return (

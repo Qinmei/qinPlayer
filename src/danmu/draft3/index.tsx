@@ -48,7 +48,7 @@ const Wrapper = styled.div`
 
 interface PropsType {}
 
-const reactComponent: React.FC<PropsType> = props => {
+const reactComponent: React.FC<PropsType> = (props) => {
   const data = useContext(PlayerContext);
   const {
     state: { danmu, current, danmuArea, danmuFont, danmuShow, mode, danmuOpacity, play },
@@ -56,8 +56,8 @@ const reactComponent: React.FC<PropsType> = props => {
 
   if (!danmuShow) return <></>;
 
-  const danmuRef: React.RefObject<T> = useRef(null);
-  const storeRef: React.RefObject<T> = useRef({});
+  const danmuRef = useRef<HTMLDivElement>({} as HTMLDivElement);
+  const storeRef = useRef<any>({});
 
   if (!storeRef.current.top) {
     storeRef.current.top = [];
@@ -69,19 +69,19 @@ const reactComponent: React.FC<PropsType> = props => {
   const [total, setTotal] = useState(0);
 
   const initData = async (target: string) => {
-    const data = await fetch(target).then(res => res.json());
+    const data = await fetch(target).then((res) => res.json());
     setList(data.data);
   };
 
   const filterData = (list: Array<any>) => {
     list
       .filter(
-        item =>
+        (item) =>
           item.time < current + 0.5 &&
           item.time > current - 0.5 &&
-          !show.some(ele => ele._id === item._id),
+          !show.some((ele) => ele._id === item._id),
       )
-      .map(item => {
+      .map((item) => {
         draw(item);
       });
   };
@@ -99,7 +99,7 @@ const reactComponent: React.FC<PropsType> = props => {
   };
 
   const getEmptyDanmuTop = () => {
-    show.map(item => {
+    show.map((item) => {
       const left = item.left;
       const top = item.top;
       storeRef.current.top[top] = {
@@ -110,7 +110,7 @@ const reactComponent: React.FC<PropsType> = props => {
 
     let result = [...storeRef.current.top].sort((a, b) => a.left - b.left);
     const lessDanmu = result
-      .filter(item => item.top < total / 2 && item.top > 0 && Math.abs(width - item.left) < 100)
+      .filter((item) => item.top < total / 2 && item.top > 0 && Math.abs(width - item.left) < 100)
       .sort((a, b) => a.top - b.top);
     if (lessDanmu.length > 0) {
       result = lessDanmu;

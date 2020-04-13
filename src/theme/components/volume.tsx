@@ -90,12 +90,12 @@ const Wrapper = styled.div`
   }
 `;
 
-const reactComponent: React.FC<{}> = props => {
+const reactComponent: React.FC<{}> = (props) => {
   const data = useContext(PlayerContext);
   const { methods, state } = data;
   const { color } = state;
 
-  const volumeRef: React.RefObject = useRef(null);
+  const volumeRef = useRef<HTMLDivElement>({} as HTMLDivElement);
 
   const [volumeShow, setVolumeShow] = useState(false); //音量拖动条点击判断
   const [currentVolume, setCurrentVolume] = useState(75); // 当前音量显示

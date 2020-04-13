@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import Icon from './icon';
 import { PlayerContext } from '../../model';
 import lang from '../../utils/local';
@@ -179,7 +179,7 @@ const Wrapper = styled.div`
 
 const sizeArr = [0, 1, 2, 3, 4];
 
-const reactComponent: React.FC<{}> = props => {
+const reactComponent: React.FC<{}> = (props) => {
   const data = useContext(PlayerContext);
   const { methods, state } = data;
   const { color } = state;

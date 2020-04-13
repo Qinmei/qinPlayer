@@ -6,13 +6,13 @@ interface PropsType {
   lineHeight: number;
 }
 
-const reactComponent: React.FC<PropsType> = props => {
+const reactComponent: React.FC<PropsType> = (props) => {
   const { list, play, lineHeight } = props;
 
-  const storeRef: React.RefObject<T> = useRef({});
+  const storeRef = useRef<any>({});
 
   const start = () => {
-    list.map(item => {
+    list.map((item) => {
       item.left -= 1;
     });
 
@@ -43,7 +43,7 @@ const reactComponent: React.FC<PropsType> = props => {
 
   return (
     <div className="con">
-      {list.map(item => (
+      {list.map((item) => (
         <div
           className="danmu"
           key={item._id}

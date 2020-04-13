@@ -26,11 +26,11 @@ interface PropsType {
   onChange: (id: string, left: number) => void;
 }
 
-const reactComponent: React.FC<PropsType> = props => {
+const reactComponent: React.FC<PropsType> = (props) => {
   const { text, id, left: preLeft, top, width, height, play, onChange } = props;
 
   let [left, setLeft] = useState<number>(preLeft);
-  const textRef: React.RefObject<T> = useRef({});
+  const textRef = useRef<any>({});
 
   const start = () => {
     left -= 2;

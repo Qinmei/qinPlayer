@@ -1,4 +1,5 @@
 import React, { createContext, useReducer } from 'react';
+import { Methods } from './methods';
 
 interface PropsType {
   onStateChange?: (type: string, value: any, state: any) => void;
@@ -8,11 +9,11 @@ interface PropsType {
 
 interface ContextProps {
   state: DataType;
-  dispatch: React.Dispatch<T>;
-  methods: MethodsProps;
+  dispatch: React.Dispatch<any>;
+  methods: Methods;
 }
 
-interface DataType {
+export interface DataType {
   source: string;
   poster: string;
   preload: 'auto' | 'metadata' | 'none';
@@ -55,40 +56,7 @@ interface DataType {
   danmuFont: number;
 }
 
-interface MethodsProps {
-  changePlay: (value?: boolean) => void;
-  changeScreen: (value?: boolean) => void;
-  changeMode: (value?: string) => void;
-  changeWebScreen: (value?: boolean) => void;
-  changeMovie: (value?: boolean) => void;
-  changeVolume: (value?: number) => void;
-  changeCurrent: (value?: number) => void;
-  changeSeeked: (value?: number) => void;
-  changeBuffered: (value: Array<Array<number>>) => void;
-  changeDuration: (value?: number) => void;
-  changeLoading: (value?: boolean) => void;
-  changeMessage: (value?: string) => void;
-  changePicture: (value?: boolean) => void;
-  changeLight: (value?: boolean) => void;
-  changeLoop: (value?: boolean) => void;
-  changeRate: (value?: number) => void;
-  changeSubShow: (value?: boolean) => void;
-  changeSubColor: (value?: number) => void;
-  changeSubSize: (value?: number) => void;
-  changeSubMargin: (value?: number) => void;
-  changeSize: (value?: number) => void;
-  changeDanmuShow: (value: boolean) => void;
-  changeNoTop: (value: boolean) => void;
-  changeNoBottom: (value: boolean) => void;
-  changeNoScroll: (value: boolean) => void;
-  changeDanmuOpacity: (value: number) => void;
-  changeDanmuArea: (value: number) => void;
-  changeDanmuFont: (value: number) => void;
-}
-
-const contextValue: ContextProps = {};
-
-const PlayerContext = createContext(contextValue);
+const PlayerContext = createContext({} as ContextProps);
 
 const reducer = (state: DataType, action: any) => {
   return {
@@ -152,45 +120,10 @@ const PlayerProvider = (props: PropsType) => {
     console.log(type, value);
   };
 
-  // 导出方法给控制栏调用, 改变model的数据状态, 同时回调函数将结果上传
-  const methods: MethodsProps = {
-    changePlay: (value: boolean = !state.play) => sendData('play', value),
-    changeMode: (value: string = 'auto') => sendData('mode', value),
-    changeScreen: (value: boolean = !state.fullscreen) => sendData('fullscreen', value),
-    changeWebScreen: (value: boolean = !state.webscreen) => sendData('webscreen', value),
-    changeMovie: (value: boolean = !state.movie) => sendData('movie', value),
-    changeVolume: (value: number = 0.75) =>
-      sendData('volume', value > 1 ? 1 : value < 0 ? 0 : value),
-    changeCurrent: (value: number = state.current) =>
-      sendData('current', value < 0 ? 0 : value > state.duration ? state.duration : value),
-    changeSeeked: (value: number = state.seeked) =>
-      sendData('seeked', value < 0 ? 0 : value > state.duration ? state.duration : value),
-    changeBuffered: (value: Array<Array<number>>) => sendData('buffered', value),
-    changeDuration: (value: number = 0) => sendData('duration', value),
-    changeLoading: (value: boolean = !state.loading) => sendData('loading', value),
-    changeMessage: (value: string = '') => sendData('message', value),
-    changePicture: (value: boolean = !state.picture) => sendData('picture', value),
-    changeLight: (value: boolean = !state.light) => sendData('light', value),
-    changeLoop: (value: boolean = !state.loop) => sendData('loop', value),
-    changeRate: (value: number = 1) => sendData('rate', value),
-    changeSubShow: (value: boolean = !state.subshow) => sendData('subshow', value),
-    changeSubColor: (value: number = state.subcolor) => sendData('subcolor', value),
-    changeSubSize: (value: number = state.subsize) => sendData('subsize', value),
-    changeSubMargin: (value: number = state.submargin) => sendData('submargin', value),
-    changeSize: (value: number = state.size) => sendData('size', value),
-    changeDanmuShow: (value: boolean = !state.danmuShow) => sendData('danmuShow', value),
-    changeNoTop: (value: boolean = !state.noTop) => sendData('noTop', value),
-    changeNoBottom: (value: boolean = !state.noBottom) => sendData('noBottom', value),
-    changeNoScroll: (value: boolean = !state.noScroll) => sendData('noScroll', value),
-    changeDanmuOpacity: (value: number = state.danmuOpacity) => sendData('danmuOpacity', value),
-    changeDanmuArea: (value: number = state.danmuArea) => sendData('danmuArea', value),
-    changeDanmuFont: (value: number = state.danmuFont) => sendData('danmuFont', value),
-  };
-
   const contextValue: ContextProps = {
     state,
     dispatch,
-    methods,
+    methods: new Methods(state, sendData),
   };
 
   return <PlayerContext.Provider value={contextValue}>{children}</PlayerContext.Provider>;

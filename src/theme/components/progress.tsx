@@ -92,12 +92,12 @@ const Wrapper = styled.div`
   }
 `;
 
-const reactComponent: React.FC<{}> = props => {
+const reactComponent: React.FC<{}> = (props) => {
   const data = useContext(PlayerContext);
   const { methods, state } = data;
   const { color } = state;
 
-  const progressRef: React.RefObject = useRef(null);
+  const progressRef = useRef<HTMLDivElement>({} as HTMLDivElement);
 
   const [current, setCurrent] = useState(state.current); // 进度条
   const [show, setShow] = useState(false); // 点击拖动进度条判断

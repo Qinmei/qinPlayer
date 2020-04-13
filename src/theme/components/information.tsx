@@ -37,7 +37,13 @@ const Wrapper = styled.div`
   }
 `;
 
-const reactComponent: React.FC<{}> = (props, ref) => {
+interface PropsType {}
+
+export interface InformationRefAll {
+  init: (type: string) => void;
+}
+
+const reactComponent = (props: PropsType, ref: React.Ref<InformationRefAll>) => {
   const data = useContext(PlayerContext);
   const { state } = data;
 

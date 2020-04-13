@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { PlayerContext } from '../../model';
 import styled from 'styled-components';
 
 interface PropsType {
   currentTime: number;
-  progressRef: React.RefObject<T>;
+  progressRef: React.RefObject<HTMLDivElement>;
 }
 
 const Wrapper = styled.div`
@@ -20,7 +20,7 @@ const Wrapper = styled.div`
   pointer-events: none;
 `;
 
-const reactComponent: React.FC<PropsType> = props => {
+const reactComponent: React.FC<PropsType> = (props) => {
   const { currentTime, progressRef } = props;
   const data = useContext(PlayerContext);
   const { methods, state } = data;

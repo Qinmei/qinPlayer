@@ -13,16 +13,16 @@ import Duration from '../components/duration';
 import Message from '../components/message';
 import Loading from '../components/loading';
 import Progress from '../components/progress';
-import Information from '../components/information';
+import Information, { InformationRefAll } from '../components/information';
 
-const reactComponent: React.FC<{}> = props => {
+const reactComponent: React.FC<{}> = (props) => {
   const data = useContext(PlayerContext);
   const { methods, state } = data;
   const { webscreen, light } = state;
   const { children } = props;
 
-  const playerRef: React.RefObject<T> = useRef(undefined);
-  const infoRef: React.RefObject<T> = useRef(undefined);
+  const playerRef = useRef<HTMLDivElement>({} as HTMLDivElement);
+  const infoRef = useRef<InformationRefAll>({} as InformationRefAll);
 
   const preventDefault = (e: React.MouseEvent) => {
     e.preventDefault();
