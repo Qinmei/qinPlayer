@@ -1,9 +1,9 @@
 import React from 'react';
 import Core from './core';
 import Sub from './subtitle';
-import Danmu from './danmu';
+import Danmu, { DanmuText } from './danmu';
 import WebTheme from './theme/web/theme';
-import { PlayerProvider } from './model';
+import { PlayerProvider, DataType } from './model';
 import '@babel/polyfill';
 
 interface PropsType {
@@ -14,10 +14,12 @@ interface PropsType {
   color?: string;
   subtitle?: string;
   danmu?: string;
-  onStateChange?: (type: string, value: any, state: any) => void;
+  danmuFront?: (res: any) => DanmuText[];
+  danmuBack?: (value: DanmuText) => Promise<boolean>;
+  onStateChange?: (type: string, value: any, state: DataType) => void;
 }
 
-const reactComponent: React.FC<PropsType> = props => {
+const reactComponent: React.FC<PropsType> = (props) => {
   const { onStateChange, ...args } = props;
 
   return (
