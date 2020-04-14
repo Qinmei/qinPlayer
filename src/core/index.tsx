@@ -22,9 +22,7 @@ const Wrapper = styled.div`
   }
 `;
 
-interface PropsType {}
-
-const reactComponent: React.FC<PropsType> = (props) => {
+const reactComponent = () => {
   const videoRef = useRef<HTMLVideoElement>({} as HTMLVideoElement);
 
   const data = useContext(PlayerContext);

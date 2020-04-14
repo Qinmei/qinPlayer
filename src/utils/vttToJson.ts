@@ -1,3 +1,9 @@
+export type SubList = {
+  start: number;
+  end: number;
+  word: string[];
+};
+
 const timeString2ms = (time: string) => {
   let timeArr = time.split('.');
   const timems = parseInt(timeArr[1]);
@@ -9,7 +15,7 @@ const timeString2ms = (time: string) => {
   return times + timems / 1000;
 };
 
-const convertVttToJson = (vttString: string) => {
+const convertVttToJson = (vttString: string): Promise<SubList[]> => {
   return new Promise((resolve, reject) => {
     let current: any = {};
     let sections: Array<any> = [];
@@ -21,20 +27,8 @@ const convertVttToJson = (vttString: string) => {
       if (!start && /-->/.test(line)) {
         start = true;
         current = {
-          start: timeString2ms(
-            line
-              .split('-->')[0]
-              .trimRight()
-              .split(' ')
-              .pop(),
-          ),
-          end: timeString2ms(
-            line
-              .split('-->')[1]
-              .trimLeft()
-              .split(' ')
-              .shift(),
-          ),
+          start: timeString2ms(line.split('-->')[0].trimRight().split(' ').pop()),
+          end: timeString2ms(line.split('-->')[1].trimLeft().split(' ').shift()),
           word: [],
         };
       } else if (start && line) {

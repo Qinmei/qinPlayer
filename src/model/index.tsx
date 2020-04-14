@@ -1,5 +1,6 @@
 import React, { createContext, useReducer } from 'react';
 import { Methods } from './methods';
+import { DanmuText } from '../danmu';
 
 interface PropsType {
   onStateChange?: (type: string, value: any, state: any) => void;
@@ -54,6 +55,8 @@ export interface DataType {
   danmuOpacity: number;
   danmuArea: number;
   danmuFont: number;
+  danmuFront?: (res: any) => DanmuText[];
+  danmuBack?: (value: DanmuText) => Promise<boolean>;
 }
 
 const PlayerContext = createContext({} as ContextProps);

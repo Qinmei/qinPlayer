@@ -11,7 +11,7 @@ const Wrapper = styled.div`
   font-size: 13px;
 `;
 
-const reactComponent: React.FC<{}> = props => {
+const reactComponent = () => {
   const data = useContext(PlayerContext);
   const { state } = data;
 

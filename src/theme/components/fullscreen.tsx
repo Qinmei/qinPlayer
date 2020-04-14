@@ -46,7 +46,7 @@ interface PropsType {
   onChange?: () => void;
 }
 
-const reactComponent: React.FC<PropsType> = props => {
+const reactComponent = (props: PropsType) => {
   const data = useContext(PlayerContext);
   const { methods, state } = data;
   const { onChange } = props;

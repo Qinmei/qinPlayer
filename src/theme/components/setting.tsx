@@ -183,13 +183,12 @@ const Wrapper = styled.div`
 const rateArr = [0.5, 0.75, 1.0, 1.25, 1.5, 2.0];
 const sizeArr = [50, 60, 70, 80, 90, 100];
 
-const reactComponent: React.FC<{}> = props => {
+const reactComponent: React.FC<{}> = (props) => {
   const data = useContext(PlayerContext);
   const { methods, state } = data;
   const { color } = state;
 
   const pipToggle = () => {
-    if (!document.pictureInPictureEnabled) return;
     methods.changePicture();
   };
 

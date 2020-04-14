@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import Icon from './icon';
 import { PlayerContext } from '../../model';
-import lang from '../../utils/local';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`

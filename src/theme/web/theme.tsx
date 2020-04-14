@@ -21,7 +21,7 @@ const reactComponent: React.FC<{}> = (props) => {
   const { webscreen, light } = state;
   const { children } = props;
 
-  const playerRef = useRef<HTMLDivElement>({} as HTMLDivElement);
+  const playerRef = useRef<HTMLElement>({} as HTMLElement);
   const infoRef = useRef<InformationRefAll>({} as InformationRefAll);
 
   const preventDefault = (e: React.MouseEvent) => {

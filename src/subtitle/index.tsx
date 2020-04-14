@@ -3,7 +3,7 @@ import { PlayerContext } from '../model';
 import styled from 'styled-components';
 import { colorArr, marginArr, sizeArr } from '../utils/utils';
 import fetch from '../utils/request';
-import vttToJson from '../utils/vttToJson';
+import vttToJson, { SubList } from '../utils/vttToJson';
 
 const Wrapper = styled.div`
   position: absolute;
@@ -20,8 +20,8 @@ const Wrapper = styled.div`
 
   .sub {
     text-align: center;
-    text-shadow: 0px 0px 5px ${(props: { color: any }) => colorArr[props.color]}, 0px 0px 10px black,
-      0px 0px 15px black, 0px 0px 20px black;
+    text-shadow: 0px 0px 5px ${(props: { color: number }) => colorArr[props.color]},
+      0px 0px 10px black, 0px 0px 15px black, 0px 0px 20px black;
     color: white;
     margin-bottom: ${(props: { color: string; margin: string; mode: string }) =>
       marginArr[props.mode][props.margin]};
@@ -34,17 +34,15 @@ const Wrapper = styled.div`
   }
 `;
 
-interface PropsType {}
-
-const reactComponent: React.FC<PropsType> = (props) => {
+const reactComponent = () => {
   const data = useContext(PlayerContext);
   const {
-    state: { subshow, subcolor, subsize, submargin, subtitle, mode, current },
+    state: { subcolor, subsize, submargin, subtitle, mode, current },
   } = data;
 
   if (!subtitle) return <></>;
 
-  const [subData, setSubData] = useState<Array<any>>([]);
+  const [subData, setSubData] = useState<SubList[]>([]);
 
   const initData = async (url: string) => {
     const data = await fetch(url).then((res) => res.text());

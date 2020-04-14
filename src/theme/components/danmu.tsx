@@ -178,7 +178,7 @@ const Wrapper = styled.div`
 
 const sizeArr = [0, 1, 2, 3, 4];
 
-const reactComponent: React.FC<{}> = (props) => {
+const reactComponent = () => {
   const data = useContext(PlayerContext);
   const { methods, state } = data;
   const { color } = state;

@@ -25,13 +25,12 @@ interface DanmuTextShow extends DanmuText {
   top: number;
 }
 
-interface props {
-  mode: string;
+interface WrapperType {
   size: number;
+  mode: string;
   area: number;
   opacity: number;
   width: number;
-  filter: (res: any) => DanmuText[];
 }
 
 const Wrapper = styled.div`
@@ -45,28 +44,37 @@ const Wrapper = styled.div`
 
   .con {
     width: 100%;
-    height: ${(props: props) => areaArr[props.mode][props.area] * 100}%;
+    height: ${(props: WrapperType) => areaArr[props.mode][props.area] * 100}%;
     color: white;
-    font-size: ${(props: props) => fontArr[props.mode][props.size]}px;
-    line-height: ${(props: props) => fontArr[props.mode][props.size] + 4}px;
-    opacity: ${(props: props) => opacityArr[props.mode][props.opacity]};
+    font-size: ${(props: WrapperType) => fontArr[props.mode][props.size]}px;
+    line-height: ${(props: WrapperType) => fontArr[props.mode][props.size] + 4}px;
+    opacity: ${(props: WrapperType) => opacityArr[props.mode][props.opacity]};
 
     .danmu {
       position: absolute;
       display: inline-block;
-      right: ${(props: props) => props.width}px;
+      right: ${(props: WrapperType) => props.width}px;
       white-space: nowrap;
       transition: all 200 linear;
     }
   }
 `;
 
-interface PropsType {}
-
-const reactComponent: React.FC<PropsType> = (props) => {
+const reactComponent = () => {
   const data = useContext(PlayerContext);
   const {
-    state: { danmu, current, danmuArea, danmuFont, danmuShow, mode, danmuOpacity, play },
+    state: {
+      danmu,
+      current,
+      danmuArea,
+      danmuFont,
+      danmuShow,
+      mode,
+      danmuOpacity,
+      play,
+      danmuFront = (res: any) => res.data,
+      danmuBack = (value: DanmuText) => true,
+    },
   } = data;
 
   if (!danmuShow) return <></>;
@@ -85,8 +93,10 @@ const reactComponent: React.FC<PropsType> = (props) => {
   let [toggle, setToggle] = useState(0);
 
   const initData = async (target: string) => {
-    const data = await fetch(target).then((res) => res.json());
-    setList(data.data);
+    const data = await fetch(target)
+      .then((res) => res.json())
+      .then((res) => danmuFront(res));
+    setList(data);
   };
 
   const filterData = (list: DanmuText[]) => {
@@ -102,7 +112,10 @@ const reactComponent: React.FC<PropsType> = (props) => {
       });
   };
 
-  const draw = (value: any) => {
+  const draw = async (value: any) => {
+    const going = await danmuBack(value);
+    if (!going) return;
+
     const result = getEmptyDanmuTop();
     const selfWidth = (getFontLength(value.text) * fontArr[mode][danmuFont]) / 2;
     const preLeft = width + selfWidth;
@@ -203,7 +216,6 @@ const reactComponent: React.FC<PropsType> = (props) => {
       area={danmuArea}
       opacity={danmuOpacity}
       width={width}
-      play={play}
     >
       <div className="con">
         {show.map((item) => (
