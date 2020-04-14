@@ -14,8 +14,14 @@ interface ContextProps {
   methods: Methods;
 }
 
+export interface SourceType {
+  label: string;
+  value: string;
+}
+
 export interface DataType {
-  source: string;
+  source: SourceType[];
+  playSource: string;
   poster: string;
   preload: 'auto' | 'metadata' | 'none';
   mode: 'auto' | 'web' | 'h5';
@@ -71,7 +77,8 @@ const reducer = (state: DataType, action: any) => {
 const PlayerProvider = (props: PropsType) => {
   const { onStateChange, children, initData } = props;
   const data: DataType = {
-    source: '',
+    source: [],
+    playSource: (initData.source && initData.source[0] && initData.source[0].value) || '',
     poster: '',
     preload: 'auto',
     mode: 'web',

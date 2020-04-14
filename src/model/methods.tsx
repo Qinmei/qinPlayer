@@ -43,4 +43,5 @@ export class Methods {
     this.sendData('danmuOpacity', value);
   changeDanmuArea = (value: number = this.state.danmuArea) => this.sendData('danmuArea', value);
   changeDanmuFont = (value: number = this.state.danmuFont) => this.sendData('danmuFont', value);
+  changeSource = (value: string = '') => this.sendData('playSource', value);
 }

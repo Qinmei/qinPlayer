@@ -7,7 +7,10 @@ import { PlayerProvider, DataType } from './model';
 import '@babel/polyfill';
 
 interface PropsType {
-  source: string;
+  source: {
+    label: string;
+    value: string;
+  }[];
   poster?: string;
   preload?: string;
   autoplay?: boolean;

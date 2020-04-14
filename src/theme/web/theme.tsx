@@ -13,12 +13,13 @@ import Duration from '../components/duration';
 import Message from '../components/message';
 import Loading from '../components/loading';
 import Progress from '../components/progress';
+import Source from '../components/source';
 import Information, { InformationRefAll } from '../components/information';
 
 const reactComponent: React.FC<{}> = (props) => {
   const data = useContext(PlayerContext);
   const { methods, state } = data;
-  const { webscreen, light } = state;
+  const { webscreen, light, source } = state;
   const { children } = props;
 
   const playerRef = useRef<HTMLElement>({} as HTMLElement);
@@ -89,6 +90,7 @@ const reactComponent: React.FC<{}> = (props) => {
               </div>
               <div className={styles.right}>
                 <Volume></Volume>
+                {source.length > 0 && <Source></Source>}
                 {state.subtitle && <Subtitle></Subtitle>}
                 {state.danmu && <Danmu></Danmu>}
                 <Setting></Setting>

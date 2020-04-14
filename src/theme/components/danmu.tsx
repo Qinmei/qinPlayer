@@ -40,18 +40,8 @@ const Wrapper = styled.div`
       width: 100%;
       height: 30px;
       position: absolute;
-      bottom: -15px;
-      right: 0;
-      z-index: 29;
-    }
-
-    &:after {
-      content: '';
-      width: 35px;
-      height: 30px;
-      position: absolute;
       bottom: -20px;
-      right: 65px;
+      right: 0;
       z-index: 29;
     }
 
