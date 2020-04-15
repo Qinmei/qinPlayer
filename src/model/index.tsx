@@ -127,7 +127,7 @@ const PlayerProvider = (props: PropsType) => {
       [type]: value,
     });
     onStateChange && onStateChange(type, value, state);
-    console.log(type, value);
+    // console.log(type, value);
   };
 
   const contextValue: ContextProps = {

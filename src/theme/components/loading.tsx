@@ -8,9 +8,9 @@ const Wrapper = styled.div`
     width: 45px;
     height: 45px;
     position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    left: calc(50% - 22.5px);
+    top: calc(50% - 22.5px);
+    transform-origin: center;
     animation: rotate 1s linear infinite;
     fill: white;
 
@@ -25,7 +25,7 @@ const Wrapper = styled.div`
   }
 `;
 
-const reactComponent: React.FC<{}> = props => {
+const reactComponent: React.FC<{}> = (props) => {
   const data = useContext(PlayerContext);
   const { state } = data;
 

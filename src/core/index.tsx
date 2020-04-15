@@ -69,7 +69,7 @@
  * oncanplaythrough
  */
 
-import React, { useEffect, useRef, useContext } from 'react';
+import React, { useState, useEffect, useRef, useContext } from 'react';
 import { PlayerContext } from '../model';
 import styled from 'styled-components';
 
@@ -95,6 +95,9 @@ const Wrapper = styled.div`
 
 const reactComponent = () => {
   const videoRef = useRef<HTMLVideoElement>({} as HTMLVideoElement);
+  const addonRef = useRef<number>(0);
+
+  const [fail, setFail] = useState<boolean>(false);
 
   const data = useContext(PlayerContext);
   const {
@@ -123,15 +126,30 @@ const reactComponent = () => {
       methods.changePlay(false);
     },
 
-    onDurationChange: (e: any) => {
-      const { duration } = e.target;
-      methods.changeDuration(duration);
-    },
-    onTimeUpdate: (e: any) => {
+    onTimeUpdate: (e: React.ChangeEvent<HTMLVideoElement>) => {
       const { currentTime } = e.target;
       methods.changeCurrent(currentTime);
     },
-    onProgress: (e: any) => {
+
+    onSeeked: (e: React.ChangeEvent<HTMLVideoElement>) => {
+      const { readyState } = e.target;
+      if (readyState > 2) {
+        if (addonRef.current) {
+          clearTimeout(addonRef.current);
+        }
+        methods.changeLoading(false);
+      }
+    },
+    onSeeking: () => {
+      if (addonRef.current) {
+        clearTimeout(addonRef.current);
+      }
+      addonRef.current = setTimeout(() => {
+        methods.changeLoading(true);
+      }, 300);
+    },
+
+    onProgress: (e: React.ChangeEvent<HTMLVideoElement>) => {
       const { buffered } = e.target;
       const length = buffered.length;
       const arr = [...Array(length).keys()];
@@ -142,33 +160,49 @@ const reactComponent = () => {
       methods.changeLoading(true);
     },
     onLoadStart: () => {
-      methods.changeMessage('1开始加载视频...');
+      methods.changeMessage('9视频初始化');
     },
-    ondurationchange: () => {
-      methods.changeMessage('1验证视频有效性');
+    onDurationChange: (e: React.ChangeEvent<HTMLVideoElement>) => {
+      const { duration } = e.target;
+      methods.changeDuration(duration);
+      methods.changeMessage('9获取视频信息');
     },
     onLoadedMetadata: () => {
-      methods.changeMessage('1获取视频信息');
+      methods.changeMessage('9开始加载视频');
     },
-    onloadeddata: () => {
-      methods.changeMessage('1正在加载数据');
+    onLoadedData: () => {
+      methods.changeMessage('1准备播放视频');
     },
     onCanPlay: () => {
       methods.changeLoading(false);
-      console.log('onCanPlay');
     },
-    onCanPlayThrough: () => {},
-    onEmptied: () => {},
-    onEncrypted: () => {},
-    onEnded: () => {},
-    onError: () => {},
-    onPlay: () => {},
+    onCanPlayThrough: () => {}, // 体验更好, 但是需要更完美的配合, 感觉没必要
+    onEncrypted: () => {
+      methods.changeMessage('9视频文件已被加密');
+      setFail(true);
+    },
+    onEnded: () => {
+      console.log('onEnded');
+    },
+    onError: (e: React.ChangeEvent<HTMLVideoElement>) => {
+      const { error } = e.target;
+      const type: { [propName: number]: string } = {
+        1: '请求中止无法获取资源',
+        2: '获取视频时发生错误',
+        3: '视频解码错误',
+        4: '不支持的视频类型或文件',
+      };
+      if (error) {
+        methods.changeMessage(`9${type[error.code]}`);
+        setFail(true);
+      }
+    },
+    onEmptied: () => {}, // 切换视频时会触发, 暂时用不上
+    onAbort: () => {}, // 没触发过
+    onStalled: () => {}, // 中间有一部分加载失败会触发
+    onSuspend: () => {}, // 缓存了一段数据就会触发
+    onPlay: () => {}, // 切换成播放状态的时候会触发, 用处不大
     onRateChange: () => {},
-    onSeeked: () => {},
-    onSeeking: () => {},
-    onAbort: () => {},
-    onStalled: () => {},
-    onSuspend: () => {},
     onVolumeChange: () => {},
   };
 
@@ -202,6 +236,10 @@ const reactComponent = () => {
     videoRef.current.playbackRate = rate;
   }, [rate]);
 
+  useEffect(() => {
+    methods.changeLoading(false);
+  }, [fail]);
+
   // 画中画
   useEffect(() => {
     if (!document.pictureInPictureEnabled) return;
@@ -227,7 +265,7 @@ const reactComponent = () => {
         onLoadStart={onMethods.onLoadStart}
         onDurationChange={onMethods.onDurationChange}
         onLoadedMetadata={onMethods.onLoadedMetadata}
-        onLoadedData={onMethods.onLoadStart}
+        onLoadedData={onMethods.onLoadedData}
         onProgress={onMethods.onProgress}
         onCanPlay={onMethods.onCanPlay}
         onCanPlayThrough={onMethods.onCanPlayThrough}

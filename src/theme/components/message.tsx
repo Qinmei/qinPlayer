@@ -5,7 +5,7 @@ import styled from 'styled-components';
 const Wrapper = styled.div`
   .message {
     position: absolute;
-    bottom: 60px;
+    bottom: 55px;
     left: 15px;
     padding: 8px 12px;
     background-color: rgba(0, 0, 0, 0.75);
@@ -35,6 +35,16 @@ const reactComponent: React.FC<{}> = (props) => {
         return 3000;
       case '4':
         return 5000;
+      case '5':
+        return 10000;
+      case '6':
+        return 20000;
+      case '7':
+        return 60000;
+      case '8':
+        return 360000;
+      case '9':
+        return 100000000;
       default:
         return 3000;
     }
