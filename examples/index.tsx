@@ -14,6 +14,8 @@ const App = () => (
     subtitle="https://qinvideo.org/sub.vtt"
     danmu="https://demo.qinvideo.org/api/v1/danmu/list?id=test"
     onStateChange={(type: string, value: any, state: any) => {}}
-  />
+  >
+    弹幕区
+  </Player>
 );
 render(<App />, document.getElementById('root'));

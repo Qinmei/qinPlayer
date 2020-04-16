@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useState, useContext, useRef, useEffect } from 'react';
 import screenfull from 'screenfull';
 import styles from './style.less';
 import { PlayerContext } from '../../model';
@@ -16,14 +16,21 @@ import Progress from '../components/progress';
 import Source from '../components/source';
 import Information, { InformationRefAll } from '../components/information';
 
-const reactComponent: React.FC<{}> = (props) => {
+interface PropType {
+  fullNode?: React.ReactNode;
+}
+
+const reactComponent: React.FC<PropType> = (props) => {
   const data = useContext(PlayerContext);
   const { methods, state } = data;
-  const { webscreen, light, source } = state;
-  const { children } = props;
+  const { webscreen, light, source, play, fullscreen } = state;
+  const { children, fullNode } = props;
+
+  const [visible, setVisible] = useState<boolean>(true);
 
   const playerRef = useRef<HTMLElement>({} as HTMLElement);
   const infoRef = useRef<InformationRefAll>({} as InformationRefAll);
+  const timeRef = useRef<number>(0);
 
   const preventDefault = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -66,40 +73,66 @@ const reactComponent: React.FC<{}> = (props) => {
     }
   };
 
+  const hideControl = () => {
+    setVisible(true);
+    if (timeRef.current) {
+      clearTimeout(timeRef.current);
+    }
+    if (!play) return;
+
+    timeRef.current = setTimeout(() => {
+      setVisible(false);
+    }, 3000);
+  };
+
+  useEffect(() => {
+    if (play) {
+      hideControl();
+    } else {
+      setVisible(true);
+    }
+  }, [play]);
+
   return (
     <div
       ref={playerRef}
-      className={`${styles.qinplayer} ${webscreen && styles.webscreen} ${light && styles.nolight}`}
+      className={`${styles.qinplayer} ${webscreen && styles.webscreen} ${light && styles.nolight} ${
+        !visible && styles.novisible
+      }`}
       tabIndex={-1}
       onKeyDown={onKeyPress}
+      onMouseMove={hideControl}
+      onMouseLeave={() => setVisible(false)}
+      onMouseEnter={() => setVisible(true)}
     >
       <div className={styles.control} onClick={togglePlay}>
         <Message></Message>
         <Loading></Loading>
         <Information ref={infoRef}></Information>
-        <div
-          className={`${styles.bar} ${state.play ? styles.play : styles.pause}`}
-          onClick={preventDefault}
-        >
-          <div className={styles.content}>
-            <Progress></Progress>
-            <div className={styles.option}>
-              <div className={styles.left}>
-                <Play></Play>
-                <Duration></Duration>
-              </div>
-              <div className={styles.right}>
-                <Volume></Volume>
-                {source.length > 0 && <Source></Source>}
-                {state.subtitle && <Subtitle></Subtitle>}
-                {state.danmu && <Danmu></Danmu>}
-                <Setting></Setting>
-                <WebScreen></WebScreen>
-                <FullScreen onChange={toggleFullscreen}></FullScreen>
+        {(visible || !play) && (
+          <div className={styles.bar} onClick={preventDefault}>
+            <div className={styles.bg}></div>
+            <div className={styles.content}>
+              <Progress></Progress>
+              <div className={styles.option}>
+                <div className={styles.left}>
+                  <Play></Play>
+                  <Duration></Duration>
+                </div>
+                <div className={styles.middle}>{(fullscreen || webscreen) && fullNode}</div>
+                <div className={styles.right}>
+                  <Volume></Volume>
+                  {source.length > 0 && <Source></Source>}
+                  {state.subtitle && <Subtitle></Subtitle>}
+                  {state.danmu && <Danmu></Danmu>}
+                  <Setting></Setting>
+                  <WebScreen></WebScreen>
+                  <FullScreen onChange={toggleFullscreen}></FullScreen>
+                </div>
               </div>
             </div>
           </div>
-        </div>
+        )}
       </div>
       {children}
     </div>

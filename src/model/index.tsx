@@ -62,7 +62,6 @@ export interface DataType {
   danmuArea: number;
   danmuFont: number;
   danmuFront?: (res: any) => DanmuText[];
-  danmuBack?: (value: DanmuText) => Promise<boolean>;
 }
 
 const PlayerContext = createContext({} as ContextProps);

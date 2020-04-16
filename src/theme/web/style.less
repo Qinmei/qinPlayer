@@ -6,6 +6,8 @@
   justify-content: center;
   align-items: center;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
 
   &.webscreen {
     position: fixed;
@@ -30,6 +32,10 @@
       background-color: rgba(0, 0, 0, 0.95);
     }
   }
+
+  &.novisible {
+    cursor: none;
+  }
   .control {
     z-index: 8;
     position: absolute;
@@ -37,13 +43,6 @@
     height: 100%;
     top: 0;
     left: 0;
-    overflow: hidden;
-
-    &:hover {
-      .bar.play {
-        display: block;
-      }
-    }
 
     .bar {
       position: absolute;
@@ -51,24 +50,21 @@
       left: 0;
       bottom: 0;
       z-index: 9;
-      display: none;
 
-      &.play {
-      }
-
-      &.pause {
-        display: block;
-      }
-
-      &:before {
-        content: '';
-        position: absolute;
-        height: 0px;
+      .bg {
         width: 100%;
-        box-shadow: 0 -2px 50px 25px rgba(0, 0, 0, 0.7);
-        left: 0;
+        position: absolute;
+        width: 100%;
+        height: 140%;
         bottom: 0;
-        z-index: -1;
+        overflow: hidden;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.6) 0%,
+          rgba(0, 0, 0, 0.3) 50%,
+          rgba(0, 0, 0, 0.1) 70%,
+          rgba(0, 0, 0, 0) 100%
+        );
       }
 
       .content {
@@ -90,6 +86,10 @@
             display: flex;
             justify-content: flex-start;
             align-items: center;
+          }
+
+          .middle {
+            flex: 1;
           }
 
           .right {

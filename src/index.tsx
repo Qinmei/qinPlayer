@@ -23,11 +23,11 @@ interface PropsType {
 }
 
 const reactComponent: React.FC<PropsType> = (props) => {
-  const { onStateChange, ...args } = props;
+  const { onStateChange, children, ...args } = props;
 
   return (
     <PlayerProvider onStateChange={onStateChange} initData={args}>
-      <WebTheme>
+      <WebTheme fullNode={children}>
         <Danmu></Danmu>
         <Sub></Sub>
         <Core></Core>

@@ -73,7 +73,6 @@ const reactComponent = () => {
       danmuOpacity,
       play,
       danmuFront = (res: any) => res.data,
-      danmuBack = (value: DanmuText) => true,
     },
   } = data;
 
@@ -113,9 +112,6 @@ const reactComponent = () => {
   };
 
   const draw = async (value: any) => {
-    const going = await danmuBack(value);
-    if (!going) return;
-
     const result = getEmptyDanmuTop();
     const selfWidth = (getFontLength(value.text) * fontArr[mode][danmuFont]) / 2;
     const preLeft = width + selfWidth;
