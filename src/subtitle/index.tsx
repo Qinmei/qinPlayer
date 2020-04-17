@@ -37,7 +37,7 @@ const Wrapper = styled.div`
 const reactComponent = () => {
   const data = useContext(PlayerContext);
   const {
-    state: { subcolor, subsize, submargin, subtitle, mode, current },
+    state: { subcolor, subsize, submargin, subtitle, mode, current, subshow },
   } = data;
 
   if (!subtitle) return <></>;
@@ -59,11 +59,13 @@ const reactComponent = () => {
 
   return (
     <Wrapper color={subcolor} size={subsize} margin={submargin} mode={mode}>
-      <div className="sub">
-        {sub.map((text: string, index: number) => (
-          <p key={text + index}>{text}</p>
-        ))}
-      </div>
+      {subshow && (
+        <div className="sub">
+          {sub.map((text: string, index: number) => (
+            <p key={text + index}>{text}</p>
+          ))}
+        </div>
+      )}
     </Wrapper>
   );
 };

@@ -96,6 +96,14 @@ const reactComponent = () => {
       .then((res) => res.json())
       .then((res) => danmuFront(res));
     setList(data);
+    // const data = [...Array(300).keys()].map((item) => ({
+    //   id: item,
+    //   time: Math.random() * 10,
+    //   text: Math.random().toString(),
+    //   color: 'white',
+    //   type: 0,
+    // }));
+    // setList(data);
   };
 
   const filterData = (list: DanmuText[]) => {
@@ -146,7 +154,7 @@ const reactComponent = () => {
 
   const start = () => {
     show.map((item) => {
-      item.left -= 1;
+      item.left -= 3;
     });
 
     for (let index = 0; index < show.length; index++) {

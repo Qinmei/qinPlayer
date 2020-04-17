@@ -23,7 +23,8 @@ const convertVttToJson = (vttString: string): Promise<SubList[]> => {
 
     const vttArray: Array<any> = vttString.split('\n');
 
-    vttArray.forEach((line, index) => {
+    vttArray.forEach((item, index) => {
+      const line = item.trim();
       if (!start && /-->/.test(line)) {
         start = true;
         current = {

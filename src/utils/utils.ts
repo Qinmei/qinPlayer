@@ -17,7 +17,6 @@ export const numFixTwo = (num: number) => {
 
 export const getStyleName = (styles: any, type: string, prefix: any) => {
   const total: string = type + '-' + prefix;
-  console.log(total);
   return styles[total];
 };
 
