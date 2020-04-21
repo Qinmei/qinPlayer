@@ -161,8 +161,23 @@ const reactComponent = () => {
   };
 
   const start = () => {
+    let space = 5;
+    const now = new Date().getTime();
+    if (storeRef.current.count) {
+      const fps = 1000 / (now - storeRef.current.count);
+      if (fps < 30) {
+        space = 5;
+      } else if (fps < 61) {
+        space = 3;
+      } else {
+        space = 1.5;
+      }
+    }
+
+    storeRef.current.count = now;
+
     show.map((item) => {
-      item.left -= 5;
+      item.left -= space;
     });
 
     for (let index = 0; index < show.length; index++) {
