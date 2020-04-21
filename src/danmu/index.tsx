@@ -11,6 +11,7 @@ import { PlayerContext } from '../model';
 import styled from 'styled-components';
 import { fontArr, areaArr, opacityArr, getFontLength } from '../utils/utils';
 import fetch from '../utils/request';
+import VirtualList from './virtutal';
 
 export interface DanmuText {
   id: string;
@@ -20,9 +21,10 @@ export interface DanmuText {
   type: number;
 }
 
-interface DanmuTextShow extends DanmuText {
+export interface DanmuTextShow extends DanmuText {
   left: number;
   top: number;
+  self: number;
 }
 
 interface WrapperType {
@@ -92,18 +94,18 @@ const reactComponent = () => {
   let [toggle, setToggle] = useState(0);
 
   const initData = async (target: string) => {
-    const data = await fetch(target)
-      .then((res) => res.json())
-      .then((res) => danmuFront(res));
-    setList(data);
-    // const data = [...Array(300).keys()].map((item) => ({
-    //   id: item,
-    //   time: Math.random() * 10,
-    //   text: Math.random().toString(),
-    //   color: 'white',
-    //   type: 0,
-    // }));
+    // const data = await fetch(target)
+    //   .then((res) => res.json())
+    //   .then((res) => danmuFront(res));
     // setList(data);
+    const data = [...Array(1000).keys()].map((item) => ({
+      id: item,
+      time: Math.random() * 100,
+      text: Math.random().toString(),
+      color: 'white',
+      type: 0,
+    }));
+    setList(data);
   };
 
   const filterData = (list: DanmuText[]) => {
@@ -114,6 +116,7 @@ const reactComponent = () => {
           item.time > current - 0.5 &&
           !show.some((ele) => ele.id === item.id),
       )
+      .slice(0, 300)
       .map((item) => {
         draw(item);
       });
@@ -123,10 +126,13 @@ const reactComponent = () => {
     const result = getEmptyDanmuTop();
     const selfWidth = (getFontLength(value.text) * fontArr[mode][danmuFont]) / 2;
     const preLeft = width + selfWidth;
+    if (preLeft > width * 2) return;
+
     show.push({
       ...value,
       left: result.left < width ? preLeft : result.left + 30 + selfWidth,
       top: result.top,
+      self: selfWidth,
     });
     setShow(show);
   };
@@ -141,7 +147,9 @@ const reactComponent = () => {
       };
     });
 
-    let result = [...storeRef.current.top].sort((a, b) => a.left - b.left);
+    let result = [...storeRef.current.top]
+      .sort((a, b) => a.left - b.left)
+      .filter((item) => item.top < total);
     const lessDanmu = result
       .filter((item) => item.top < total / 2 && item.top > 0 && Math.abs(width - item.left) < 100)
       .sort((a, b) => a.top - b.top);
@@ -154,7 +162,7 @@ const reactComponent = () => {
 
   const start = () => {
     show.map((item) => {
-      item.left -= 3;
+      item.left -= 5;
     });
 
     for (let index = 0; index < show.length; index++) {
@@ -175,6 +183,26 @@ const reactComponent = () => {
     }
   };
 
+  const init = () => {
+    setWidth(danmuRef.current.clientWidth);
+    const newTotal = Math.floor(
+      (danmuRef.current.clientHeight * areaArr[mode][danmuArea]) / (fontArr[mode][danmuFont] + 4),
+    );
+
+    [...Array(newTotal)].map((item, index) => {
+      if (!storeRef.current.top[index]) {
+        storeRef.current.top[index] = {
+          left: -1,
+          top: index,
+        };
+      }
+    });
+
+    storeRef.current.top = storeRef.current.top.slice(0, newTotal);
+
+    setTotal(newTotal);
+  };
+
   useEffect(() => {
     if (play) {
       start();
@@ -191,25 +219,12 @@ const reactComponent = () => {
     filterData(list);
   }, [current]);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    init();
+  }, [danmuArea]);
 
   useLayoutEffect(() => {
-    setWidth(danmuRef.current.clientWidth);
-    const newTotal =
-      Math.floor((danmuRef.current.clientHeight - 40) / fontArr[mode][danmuFont] + 4) - 1;
-
-    if (newTotal === total) return;
-    [...Array(newTotal)].map((item, index) => {
-      if (!storeRef.current.top[index]) {
-        storeRef.current.top[index] = {
-          left: -1,
-          top: index,
-        };
-      }
-    });
-    storeRef.current.top.length = newTotal;
-
-    setTotal(newTotal);
+    init();
   });
 
   return (
@@ -222,18 +237,7 @@ const reactComponent = () => {
       width={width}
     >
       <div className="con">
-        {show.map((item) => (
-          <div
-            className="danmu"
-            key={item.id}
-            style={{
-              transform: `translateX(${item.left}px)`,
-              top: item.top * (fontArr[mode][danmuFont] + 4),
-            }}
-          >
-            {item.text}
-          </div>
-        ))}
+        <VirtualList data={show} gap={fontArr[mode][danmuFont] + 4} width={width}></VirtualList>
       </div>
     </Wrapper>
   );

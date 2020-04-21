@@ -20,13 +20,11 @@ const Wrapper = styled.div`
 
   .sub {
     text-align: center;
-    text-shadow: 0px 0px 5px ${(props: { color: number }) => colorArr[props.color]},
-      0px 0px 10px black, 0px 0px 15px black, 0px 0px 20px black;
+    text-shadow: 0px 0px 5px ${(props: any) => colorArr[props.color]}, 0px 0px 10px black,
+      0px 0px 15px black, 0px 0px 20px black;
     color: white;
-    margin-bottom: ${(props: { color: string; margin: string; mode: string }) =>
-      marginArr[props.mode][props.margin]};
-    font-size: ${(props: { color: string; size: string; mode: string }) =>
-      sizeArr[props.mode][props.size]};
+    margin-bottom: ${(props: any) => marginArr[props.mode][props.margin]};
+    font-size: ${(props: any) => sizeArr[props.mode][props.size]};
 
     p {
       margin: 0;

@@ -1,6 +1,21 @@
 import React from 'react';
 import { render } from 'react-dom';
 import Player from '../src/index';
+import Stats from 'stats.js';
+
+const stats = new Stats();
+stats.showPanel(1);
+document.body.appendChild(stats.dom);
+
+function animate() {
+  stats.begin();
+  stats.end();
+
+  requestAnimationFrame(animate);
+}
+
+requestAnimationFrame(animate);
+
 const App = () => (
   <Player
     source={[
@@ -11,7 +26,7 @@ const App = () => (
       },
     ]}
     poster="https://qinvideo.org/video.jpg"
-    subtitle="https://qinvideo.org/videos/subtitle.vtt"
+    // subtitle="https://qinvideo.org/videos/subtitle.vtt"
     danmu="https://demo.qinvideo.org/api/v1/danmu/list?id=test"
     onStateChange={(type: string, value: any, state: any) => {}}
   >
