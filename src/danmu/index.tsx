@@ -94,17 +94,9 @@ const reactComponent = () => {
   let [toggle, setToggle] = useState(0);
 
   const initData = async (target: string) => {
-    // const data = await fetch(target)
-    //   .then((res) => res.json())
-    //   .then((res) => danmuFront(res));
-    // setList(data);
-    const data = [...Array(1000).keys()].map((item) => ({
-      id: item,
-      time: Math.random() * 100,
-      text: Math.random().toString(),
-      color: 'white',
-      type: 0,
-    }));
+    const data = await fetch(target)
+      .then((res) => res.json())
+      .then((res) => danmuFront(res));
     setList(data);
   };
 
