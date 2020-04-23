@@ -26,7 +26,7 @@ const App = () => (
       },
     ]}
     poster="https://qinvideo.org/video.jpg"
-    // subtitle="https://qinvideo.org/videos/subtitle.vtt"
+    subtitle="https://qinvideo.org/videos/subtitle.vtt"
     danmu="https://demo.qinvideo.org/api/v1/danmu/list?id=test"
     onStateChange={(type: string, value: any, state: any) => {}}
   >

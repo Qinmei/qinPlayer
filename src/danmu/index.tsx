@@ -35,7 +35,7 @@ interface WrapperType {
   width: number;
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<WrapperType>`
   position: absolute;
   top: 0;
   left: 0;
@@ -46,16 +46,16 @@ const Wrapper = styled.div`
 
   .con {
     width: 100%;
-    height: ${(props: WrapperType) => areaArr[props.mode][props.area] * 100}%;
+    height: ${(props) => areaArr[props.mode][props.area] * 100}%;
     color: white;
-    font-size: ${(props: WrapperType) => fontArr[props.mode][props.size]}px;
-    line-height: ${(props: WrapperType) => fontArr[props.mode][props.size] + 4}px;
-    opacity: ${(props: WrapperType) => opacityArr[props.mode][props.opacity]};
+    font-size: ${(props) => fontArr[props.mode][props.size]}px;
+    line-height: ${(props) => fontArr[props.mode][props.size] + 4}px;
+    opacity: ${(props) => opacityArr[props.mode][props.opacity]};
 
     .danmu {
       position: absolute;
       display: inline-block;
-      right: ${(props: WrapperType) => props.width}px;
+      right: ${(props) => props.width}px;
       white-space: nowrap;
       transition: all 200 linear;
     }

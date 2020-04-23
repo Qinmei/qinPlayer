@@ -1,7 +1,7 @@
 const lang: any = {
   CN: {
     setting: '设置',
-    fullscreen: '全屏模式',
+    fullscreen: '全屏',
     webscreen: '网页全屏',
     exitweb: '退出全屏',
     intotheater: '剧场模式',

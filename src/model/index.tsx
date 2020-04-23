@@ -1,10 +1,28 @@
 import React, { createContext, useReducer } from 'react';
 import { Methods } from './methods';
 import { DanmuText } from '../danmu';
+import { getMode } from '../utils/utils';
+
+export interface IndexPropsType {
+  source: {
+    label: string;
+    value: string;
+  }[];
+  poster?: string;
+  preload?: 'auto' | 'metadata' | 'none';
+  autoplay?: boolean;
+  color?: string;
+  subtitle?: string;
+  danmu?: string;
+  danmuFront?: (res: any) => DanmuText[];
+  danmuBack?: (value: DanmuText) => Promise<boolean>;
+  onStateChange?: (type: string, value: any, state: DataType) => void;
+  mode?: 'web' | 'mobile';
+}
 
 interface PropsType {
   onStateChange?: (type: string, value: any, state: any) => void;
-  initData: any;
+  initData: IndexPropsType;
   children?: React.ReactNode;
 }
 
@@ -24,7 +42,7 @@ export interface DataType {
   playSource: string;
   poster: string;
   preload: 'auto' | 'metadata' | 'none';
-  mode: 'auto' | 'web' | 'h5';
+  mode: 'web' | 'mobile';
   autoplay: boolean;
   color: string;
   lang: string;
@@ -75,12 +93,13 @@ const reducer = (state: DataType, action: any) => {
 
 const PlayerProvider = (props: PropsType) => {
   const { onStateChange, children, initData } = props;
+
   const data: DataType = {
     source: [],
     playSource: (initData.source && initData.source[0] && initData.source[0].value) || '',
     poster: '',
     preload: 'auto',
-    mode: 'web',
+    mode: initData.mode ? initData.mode : getMode(),
     autoplay: false,
     color: '#00a1d6',
     play: false,
@@ -126,7 +145,6 @@ const PlayerProvider = (props: PropsType) => {
       [type]: value,
     });
     onStateChange && onStateChange(type, value, state);
-    // console.log(type, value);
   };
 
   const contextValue: ContextProps = {

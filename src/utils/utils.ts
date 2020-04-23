@@ -15,6 +15,14 @@ export const numFixTwo = (num: number) => {
   return num > 9 ? num : `0${num}`;
 };
 
+export const getMode = () => {
+  const agent = navigator.userAgent;
+  if (/Android|iPhone|webOS|BlackBerry|SymbianOS|Windows Phone|iPad|iPod/.test(agent)) {
+    return 'mobile';
+  }
+  return 'web';
+};
+
 export const getStyleName = (styles: any, type: string, prefix: any) => {
   const total: string = type + '-' + prefix;
   return styles[total];
@@ -42,25 +50,25 @@ export const colorArr: Array<string> = [
 
 export const marginArr: any = {
   web: ['20px', '35px', '50px', '65px', '80px'],
-  h5: [],
+  mobile: ['14px', '18px', '22px', '26px', '30px'],
 };
 
 export const sizeArr: any = {
   web: ['25px', '30px', '35px', '40px', '45px'],
-  h5: [],
+  mobile: ['12px', '14px', '16px', '18px', '20px'],
 };
 
 export const areaArr: any = {
   web: ['0.25', '0.5', '0.67', '0.75', '1'],
-  h5: [],
+  mobile: ['0.25', '0.5', '0.67', '0.75', '1'],
 };
 
 export const fontArr: any = {
   web: [12, 16, 18, 20, 24],
-  h5: [],
+  mobile: [12, 16, 18, 20, 24],
 };
 
 export const opacityArr: any = {
   web: [0.2, 0.4, 0.6, 0.8, 1],
-  h5: [],
+  mobile: [0.2, 0.4, 0.6, 0.8, 1],
 };
