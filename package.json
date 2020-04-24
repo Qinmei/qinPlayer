@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack-dev-server --mode development",
-    "build": "babel src -d dist --copy-files"
+    "babel": "babel src -d dist --copy-files",
+    "build": "webpack  --progress --display-error-details"
   },
   "repository": {
     "type": "git",
