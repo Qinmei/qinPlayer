@@ -1,0 +1,106 @@
+.qinplayer {
+  position: relative;
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  font-family: Arial, Helvetica, sans-serif;
+
+  &.webscreen {
+    position: fixed;
+    z-index: 100000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: black;
+  }
+
+  &.nolight {
+    z-index: 100000;
+    &:after {
+      content: '';
+      position: fixed;
+      z-index: -1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.95);
+    }
+  }
+
+  &.novisible {
+    cursor: none;
+  }
+  .control {
+    z-index: 8;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+
+    .bar {
+      position: absolute;
+      width: 100%;
+      left: 0;
+      bottom: 0;
+      z-index: 9;
+
+      .bg {
+        width: 100%;
+        position: absolute;
+        width: 100%;
+        height: 140%;
+        bottom: 0;
+        overflow: hidden;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.6) 0%,
+          rgba(0, 0, 0, 0.3) 50%,
+          rgba(0, 0, 0, 0.1) 70%,
+          rgba(0, 0, 0, 0) 100%
+        );
+      }
+
+      .content {
+        position: relative;
+        height: 100%;
+        padding: 0 10px;
+        box-sizing: border-box;
+
+        .option {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          line-height: 100%;
+          height: 40px;
+          z-index: 18;
+
+          .left {
+            height: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+          }
+
+          .middle {
+            flex: 1;
+          }
+
+          .right {
+            height: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+          }
+        }
+      }
+    }
+  }
+}

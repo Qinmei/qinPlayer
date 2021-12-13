@@ -1,0 +1,21 @@
+{
+  "name": "qin-player",
+  "version": "1.0.0",
+  "main": "./lib/index.js",
+  "types": "./types",
+  "repository": "git@github.com:Qinmei/qinPlayer.git",
+  "author": "Qinmei <sun.houtao@outlook.com>",
+  "license": "MIT",
+  "files": [
+    "lib",
+    "types"
+  ],
+  "scripts": {
+    "start": "crc-scripts start",
+    "build": "crc-scripts build",
+    "initConfig": "crc-scripts init"
+  },
+  "dependencies": {
+    "crc-scripts": "^1.0.17"
+  }
+}
