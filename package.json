@@ -16,6 +16,8 @@
     "initConfig": "crc-scripts init"
   },
   "dependencies": {
-    "crc-scripts": "^1.0.17"
+    "@yuanjs/common": "^0.0.16",
+    "crc-scripts": "^1.0.17",
+    "typescript": "^4.8.4"
   }
 }

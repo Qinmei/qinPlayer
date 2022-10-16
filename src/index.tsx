@@ -1,21 +1,27 @@
-import React from 'react';
-import Core from './core';
-import Sub from './subtitle';
-import Danmu from './danmu';
-import Theme from './theme';
-import { PlayerProvider, IndexPropsType } from './model';
+import React, { useState } from 'react';
+import { Core } from './core';
+import { Player } from './core/video';
 
-const QinPlayer: React.FC<IndexPropsType> = props => {
-  const { onStateChange, children, ...args } = props;
+interface PropsType {
+  options: any;
+}
+const QinPlayer: React.FC<PropsType> = props => {
+  const { options } = props;
+
+  const [player] = useState(() => new Player(options))
 
   return (
-    <PlayerProvider onStateChange={onStateChange} initData={args}>
-      <Theme fullNode={children}>
-        <Danmu></Danmu>
-        <Sub></Sub>
-        <Core></Core>
-      </Theme>
-    </PlayerProvider>
+    // <Theme>
+    //   <Danmu></Danmu>
+    //   <Sub></Sub>
+    <Core player={player}></Core>
+    // </Theme>
   );
 };
-export default QinPlayer;
+
+
+const App = () => {
+  return <QinPlayer options={{ source: 'https://zhstatic.zhihu.com/cfe/griffith/zhihu2018_sd.mp4' }}></QinPlayer>
+}
+
+export default App;
