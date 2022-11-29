@@ -9,14 +9,14 @@ interface PropsType {
 export const Core: React.FC<PropsType> = props => {
     const { player } = props;
 
-    const [state] = useStore(player.store)
+    const [state] = useStore(player.store, ['source', 'poster', 'preload', 'autoplay', 'loop'])
 
     return <video
         src={state.source}
-        // poster={poster}
-        // preload={preload}
-        // autoPlay={autoplay}
-        // loop={loop}
+        poster={state.poster}
+        preload={state.preload}
+        autoPlay={state.autoplay}
+        loop={state.loop}
         controls={false}
         onLoadStart={player.onLoadStart}
         onDurationChange={player.onDurationChange}
